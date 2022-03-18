@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">AiWanAndroid</string>
+    <string name="app_name" translatable="false">AiWanAndroid</string>
+    <string name="bottom_home">HOME</string>
+    <string name="bottom_question">QUESTION</string>
+    <string name="bottom_wechat">WECHAT</string>
+    <string name="bottom_system">SYSTEM</string>
+    <string name="bottom_project">PROJECT</string>
 </resources>

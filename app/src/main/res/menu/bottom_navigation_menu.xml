@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bottom_home"
+        android:enabled="true"
+        android:icon="@drawable/bottom_navigation_home"
+        android:title="@string/bottom_home"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/bottom_question"
+        android:enabled="true"
+        android:icon="@drawable/bottom_navigation_question"
+        android:title="@string/bottom_question"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/bottom_wechat"
+        android:enabled="true"
+        android:icon="@drawable/bottom_navigation_wechat"
+        android:title="@string/bottom_wechat"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/bottom_system"
+        android:enabled="true"
+        android:icon="@drawable/bottom_navigation_system"
+        android:title="@string/bottom_system"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/bottom_project"
+        android:enabled="true"
+        android:icon="@drawable/bottom_navigation_project"
+        android:title="@string/bottom_project"
+        app:showAsAction="ifRoom" />
+
+
+</menu>
