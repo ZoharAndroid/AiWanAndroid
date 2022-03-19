@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
                         break;
                     case R.id.bottom_question:
-                        
+
                         break;
                     case R.id.bottom_wechat:
 
