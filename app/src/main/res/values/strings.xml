@@ -5,4 +5,8 @@
     <string name="bottom_wechat">WECHAT</string>
     <string name="bottom_system">SYSTEM</string>
     <string name="bottom_project">PROJECT</string>
+    <string name="tool_bar_title">Title</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_collection">Collection</string>
+    <string name="menu_opera">Open Explorer</string>
 </resources>

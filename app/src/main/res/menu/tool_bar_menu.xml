@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_share"
+        android:icon="@mipmap/icon_share"
+        android:title="@string/menu_share"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_collection"
+        android:icon="@mipmap/icon_collection"
+        android:title="@string/menu_collection"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_explorer"
+        android:icon="@mipmap/icon_opera"
+        android:title="@string/menu_opera"
+        app:showAsAction="never" />
+</menu>
