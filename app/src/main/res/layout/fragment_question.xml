@@ -6,6 +6,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/bottom_home"/>
+        android:text="@string/bottom_question"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
