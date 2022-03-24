@@ -9,4 +9,13 @@
     <string name="menu_share">Share</string>
     <string name="menu_collection">Collection</string>
     <string name="menu_opera">Open Explorer</string>
+    <string name="nav_score">My Score</string>
+    <string name="nav_collection">My Collection</string>
+    <string name="nav_share">My Share</string>
+    <string name="nav_todo">TODO</string>
+    <string name="nav_night">Night Mode</string>
+    <string name="nav_setting">System Setting</string>
+    <string name="nav_header_grade">Grade：</string>
+    <string name="nav_header_order">Order：</string>
+    <string name="login">Login in</string>
 </resources>

@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         mDrawerLayout = findViewById(R.id.drawer_layout_main);
 
+
         // 将toolbar设置Actionbar
         setSupportActionBar(toolbar);
 
@@ -54,9 +55,13 @@ public class MainActivity extends AppCompatActivity {
         Fragment mHomeFragment = HomeFragment.getInstance(null, null);
         getSupportFragmentManager().beginTransaction().add(R.id.content_group, mHomeFragment).commit();
 
+        // 给navigationview的menu创建菜单点击事件
+
+
 
         // 给底部导航栏添加点击事件
         mBottomView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -80,11 +85,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // 创建toolbar 右侧菜单
         getMenuInflater().inflate(R.menu.tool_bar_menu, menu);
         return true;
     }
@@ -99,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menu_share:
                 // 分享
+
                 break;
             case R.id.menu_collection:
                 // 收藏

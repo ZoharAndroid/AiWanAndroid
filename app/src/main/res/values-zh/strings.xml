@@ -9,4 +9,13 @@
     <string name="menu_share">分享</string>
     <string name="menu_collection">收藏</string>
     <string name="menu_opera">用浏览器打开</string>
+    <string name="nav_score">我的积分</string>
+    <string name="nav_collection">我的收藏</string>
+    <string name="nav_share">我的分享</string>
+    <string name="nav_todo">TODO</string>
+    <string name="nav_night">夜间模式</string>
+    <string name="nav_setting">系统设置</string>
+    <string name="nav_header_grade">等级：</string>
+    <string name="nav_header_order">排名：</string>
+    <string name="login">登录</string>
 </resources>

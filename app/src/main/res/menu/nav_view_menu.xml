@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_menu_my_score"
+        android:icon="@mipmap/icon_score"
+        android:title="@string/nav_score" />
+    <item
+        android:id="@+id/nav_menu_my_collection"
+        android:icon="@mipmap/icon_nav_collect"
+        android:title="@string/nav_collection" />
+    <item
+        android:id="@+id/nav_menu_my_share"
+        android:icon="@mipmap/icon_my_share"
+        android:title="@string/nav_share" />
+
+    <item
+        android:id="@+id/nav_menu_todo"
+        android:icon="@mipmap/icon_todo"
+        android:title="@string/nav_todo" />
+
+    <item
+        android:id="@+id/nav_menu_night"
+        android:icon="@mipmap/icon_night"
+        android:title="@string/nav_night" />
+
+    <item
+        android:id="@+id/nav_menu_system_setting"
+        android:icon="@mipmap/icon_setting"
+        android:title="@string/nav_setting" />
+</menu>
