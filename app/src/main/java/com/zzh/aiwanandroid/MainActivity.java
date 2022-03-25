@@ -14,18 +14,19 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.zzh.aiwanandroid.fragment.HomeFragment;
 import com.zzh.aiwanandroid.fragment.ProjectFragment;
 import com.zzh.aiwanandroid.fragment.QuestionFragment;
 import com.zzh.aiwanandroid.fragment.SystemFragment;
 import com.zzh.aiwanandroid.fragment.WechatFragment;
+import com.zzh.aiwanandroid.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView mBottomView;
-    private FrameLayout mContentGroupFrameLayout;
     private DrawerLayout mDrawerLayout;
 
     @Override
@@ -33,11 +34,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mBottomView = findViewById(R.id.bottom_navigation);
-        mContentGroupFrameLayout = findViewById(R.id.content_group);
+        BottomNavigationView mBottomView = findViewById(R.id.bottom_navigation);
+        FrameLayout mContentGroupFrameLayout = findViewById(R.id.content_group);
         Toolbar toolbar = findViewById(R.id.toolbar);
         mDrawerLayout = findViewById(R.id.drawer_layout_main);
-
+        NavigationView mNavigationView = findViewById(R.id.navigation_view);
 
         // 将toolbar设置Actionbar
         setSupportActionBar(toolbar);
@@ -55,9 +56,43 @@ public class MainActivity extends AppCompatActivity {
         Fragment mHomeFragment = HomeFragment.getInstance(null, null);
         getSupportFragmentManager().beginTransaction().add(R.id.content_group, mHomeFragment).commit();
 
-        // 给navigationview的menu创建菜单点击事件
+        // 给NavigationView的menu创建菜单点击事件
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @SuppressLint("NonConstantResourceId")
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.nav_menu_my_score:
+                        Utils.ToastShow("我的积分");
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    case R.id.nav_menu_my_collection:
+                        Utils.ToastShow("我的收藏");
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    case R.id.nav_menu_my_share:
+                        Utils.ToastShow("我的分享");
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    case R.id.nav_menu_todo:
+                        Utils.ToastShow("todo");
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    case R.id.nav_menu_night:
+                        Utils.ToastShow("夜间模式");
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    case R.id.nav_menu_system_setting:
+                        Utils.ToastShow("系统设置");
+                        mDrawerLayout.closeDrawers();
+                        return true;
+                    default:
+                        mDrawerLayout.closeDrawers();
+                }
 
-
+                return false;
+            }
+        });
 
         // 给底部导航栏添加点击事件
         mBottomView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
