@@ -18,4 +18,5 @@
     <string name="nav_header_grade">等级：</string>
     <string name="nav_header_order">排名：</string>
     <string name="login">登录</string>
+    <string name="up">向上</string>
 </resources>

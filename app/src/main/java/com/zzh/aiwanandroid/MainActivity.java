@@ -13,10 +13,12 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.zzh.aiwanandroid.fragment.HomeFragment;
 import com.zzh.aiwanandroid.fragment.ProjectFragment;
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         mDrawerLayout = findViewById(R.id.drawer_layout_main);
         NavigationView mNavigationView = findViewById(R.id.navigation_view);
+        FloatingActionButton mFloatingActionButton = findViewById(R.id.floating_action_button);
 
         // 将toolbar设置Actionbar
         setSupportActionBar(toolbar);
@@ -55,6 +58,14 @@ public class MainActivity extends AppCompatActivity {
         // 默认开启Home页面
         Fragment mHomeFragment = HomeFragment.getInstance(null, null);
         getSupportFragmentManager().beginTransaction().add(R.id.content_group, mHomeFragment).commit();
+
+        // 给FloatingActionButton设置点击事件
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.ToastShow("FloatingActionButton");
+            }
+        });
 
         // 给NavigationView的menu创建菜单点击事件
         mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
