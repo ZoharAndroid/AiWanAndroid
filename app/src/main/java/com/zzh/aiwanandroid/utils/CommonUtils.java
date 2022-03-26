@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 import com.zzh.aiwanandroid.config.MyApplication;
 
-public class Utils {
+public class CommonUtils {
 
 
     /**

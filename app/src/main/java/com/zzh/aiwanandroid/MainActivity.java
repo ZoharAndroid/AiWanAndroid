@@ -7,25 +7,31 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.zzh.aiwanandroid.config.CallbackListener;
+import com.zzh.aiwanandroid.config.HttpConfig;
 import com.zzh.aiwanandroid.fragment.HomeFragment;
 import com.zzh.aiwanandroid.fragment.ProjectFragment;
 import com.zzh.aiwanandroid.fragment.QuestionFragment;
 import com.zzh.aiwanandroid.fragment.SystemFragment;
 import com.zzh.aiwanandroid.fragment.WechatFragment;
-import com.zzh.aiwanandroid.utils.Utils;
+import com.zzh.aiwanandroid.utils.CommonUtils;
+import com.zzh.aiwanandroid.utils.HttpUtils;
+import com.zzh.aiwanandroid.utils.LogUtils;
+
+import okhttp3.Call;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.ToastShow("FloatingActionButton");
+                CommonUtils.ToastShow("FloatingActionButton");
             }
         });
 
@@ -74,27 +80,27 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_menu_my_score:
-                        Utils.ToastShow("我的积分");
+                        CommonUtils.ToastShow("我的积分");
                         mDrawerLayout.closeDrawers();
                         return true;
                     case R.id.nav_menu_my_collection:
-                        Utils.ToastShow("我的收藏");
+                        CommonUtils.ToastShow("我的收藏");
                         mDrawerLayout.closeDrawers();
                         return true;
                     case R.id.nav_menu_my_share:
-                        Utils.ToastShow("我的分享");
+                        CommonUtils.ToastShow("我的分享");
                         mDrawerLayout.closeDrawers();
                         return true;
                     case R.id.nav_menu_todo:
-                        Utils.ToastShow("todo");
+                        CommonUtils.ToastShow("todo");
                         mDrawerLayout.closeDrawers();
                         return true;
                     case R.id.nav_menu_night:
-                        Utils.ToastShow("夜间模式");
+                        CommonUtils.ToastShow("夜间模式");
                         mDrawerLayout.closeDrawers();
                         return true;
                     case R.id.nav_menu_system_setting:
-                        Utils.ToastShow("系统设置");
+                        CommonUtils.ToastShow("系统设置");
                         mDrawerLayout.closeDrawers();
                         return true;
                     default:
@@ -128,6 +134,19 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                 }
                 return false;
+            }
+        });
+
+        //HttpUtils.sendHttpRequest(HttpConfig.HOME_ARTICLE_URL(0));
+        HttpUtils.sendHttpRequest(HttpConfig.HOME_ARTICLE_URL(0), new CallbackListener() {
+            @Override
+            public void onSuccess(String response){
+                LogUtils.d(response);
+            }
+
+            @Override
+            public void onFailure(Call call) {
+
             }
         });
 
