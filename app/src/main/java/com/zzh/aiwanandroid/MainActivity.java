@@ -20,6 +20,8 @@ import android.widget.FrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.zzh.aiwanandroid.bean.ArticlePages;
 import com.zzh.aiwanandroid.config.CallbackListener;
 import com.zzh.aiwanandroid.config.HttpConfig;
 import com.zzh.aiwanandroid.fragment.HomeFragment;
@@ -141,12 +143,14 @@ public class MainActivity extends AppCompatActivity {
         HttpUtils.sendHttpRequest(HttpConfig.HOME_ARTICLE_URL(0), new CallbackListener() {
             @Override
             public void onSuccess(String response){
-                LogUtils.d(response);
+                Gson gson = new Gson();
+                ArticlePages articlePages = gson.fromJson(response, ArticlePages.class);
+                LogUtils.d(articlePages.getErrorCode()+"");
             }
 
             @Override
             public void onFailure(Call call) {
-
+                CommonUtils.ToastShow("网络异常！");
             }
         });
 
