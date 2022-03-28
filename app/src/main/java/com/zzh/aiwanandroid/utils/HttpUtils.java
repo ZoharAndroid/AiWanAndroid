@@ -40,7 +40,7 @@ public class HttpUtils {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 //LogUtils.d(Objects.requireNonNull(response.body()).string());
                 LogUtils.d("网络请求成功");
-                listener.onSuccess(Objects.requireNonNull(response.body()).string());
+                listener.onSuccess(response.body().string());
             }
         });
 

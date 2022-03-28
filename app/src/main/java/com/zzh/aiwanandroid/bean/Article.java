@@ -9,7 +9,7 @@ public class Article {
 
     private String apkLink;
     private int audit;
-    private int author;
+    private String author;
     private boolean canEdit;
     private int chapterId;
     private String chapterName;
@@ -27,10 +27,10 @@ public class Article {
     private String origin;
     private String prefix;
     private String projectLink;
-    private float publishTime;
+    private long publishTime;
     private int realSuperChapterId;
     private int selfVisible;
-    private float shareDate;
+    private long shareDate;
     private String shareUser;
     private int superChapterId;
     private String superChapterName;
@@ -57,11 +57,11 @@ public class Article {
         this.audit = audit;
     }
 
-    public int getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(int author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 
@@ -201,11 +201,11 @@ public class Article {
         this.projectLink = projectLink;
     }
 
-    public float getPublishTime() {
+    public long getPublishTime() {
         return publishTime;
     }
 
-    public void setPublishTime(float publishTime) {
+    public void setPublishTime(long publishTime) {
         this.publishTime = publishTime;
     }
 
@@ -229,7 +229,7 @@ public class Article {
         return shareDate;
     }
 
-    public void setShareDate(float shareDate) {
+    public void setShareDate(long shareDate) {
         this.shareDate = shareDate;
     }
 

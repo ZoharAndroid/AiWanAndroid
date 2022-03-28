@@ -139,13 +139,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //HttpUtils.sendHttpRequest(HttpConfig.HOME_ARTICLE_URL(0));
+        /**
+         * 请求首页文章数据
+         */
         HttpUtils.sendHttpRequest(HttpConfig.HOME_ARTICLE_URL(0), new CallbackListener() {
             @Override
-            public void onSuccess(String response){
+            public void onSuccess(String response) {
                 Gson gson = new Gson();
                 ArticlePages articlePages = gson.fromJson(response, ArticlePages.class);
-                LogUtils.d(articlePages.getErrorCode()+"");
             }
 
             @Override

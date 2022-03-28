@@ -7,15 +7,11 @@ import java.util.List;
  */
 public class ArticlePages {
 
-    private List<ArticlePagesData> data;
+    private ArticlePagesData data;
     private int errorCode;
     private String errorMsg;
 
-    public List<ArticlePagesData> getData() {
-        return data;
-    }
-
-    public void setData(List<ArticlePagesData> data) {
+    public ArticlePages(ArticlePagesData data) {
         this.data = data;
     }
 
