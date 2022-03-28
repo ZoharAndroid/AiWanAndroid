@@ -7,11 +7,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,20 +18,12 @@ import android.widget.FrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
-import com.zzh.aiwanandroid.bean.ArticlePages;
-import com.zzh.aiwanandroid.config.CallbackListener;
-import com.zzh.aiwanandroid.config.HttpConfig;
-import com.zzh.aiwanandroid.fragment.HomeFragment;
+import com.zzh.aiwanandroid.fragment.home.HomeFragment;
 import com.zzh.aiwanandroid.fragment.ProjectFragment;
 import com.zzh.aiwanandroid.fragment.QuestionFragment;
 import com.zzh.aiwanandroid.fragment.SystemFragment;
 import com.zzh.aiwanandroid.fragment.WechatFragment;
 import com.zzh.aiwanandroid.utils.CommonUtils;
-import com.zzh.aiwanandroid.utils.HttpUtils;
-import com.zzh.aiwanandroid.utils.LogUtils;
-
-import okhttp3.Call;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -136,22 +126,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                 }
                 return false;
-            }
-        });
-
-        /**
-         * 请求首页文章数据
-         */
-        HttpUtils.sendHttpRequest(HttpConfig.HOME_ARTICLE_URL(0), new CallbackListener() {
-            @Override
-            public void onSuccess(String response) {
-                Gson gson = new Gson();
-                ArticlePages articlePages = gson.fromJson(response, ArticlePages.class);
-            }
-
-            @Override
-            public void onFailure(Call call) {
-                CommonUtils.ToastShow("网络异常！");
             }
         });
 

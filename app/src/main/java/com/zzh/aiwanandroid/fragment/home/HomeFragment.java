@@ -1,28 +1,24 @@
-package com.zzh.aiwanandroid.fragment;
+package com.zzh.aiwanandroid.fragment.home;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.zzh.aiwanandroid.Constants;
 import com.zzh.aiwanandroid.R;
 import com.zzh.aiwanandroid.base.BaseFragment;
+import com.zzh.aiwanandroid.bean.ArticlePages;
 import com.zzh.aiwanandroid.config.CallbackListener;
 import com.zzh.aiwanandroid.config.HttpConfig;
+import com.zzh.aiwanandroid.utils.CommonUtils;
 import com.zzh.aiwanandroid.utils.HttpUtils;
 
-import java.io.IOException;
-
 import okhttp3.Call;
-import okhttp3.Response;
 
 public class HomeFragment extends BaseFragment {
 
@@ -60,7 +56,21 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initEventAndData() {
+        /**
+         * 请求首页文章数据
+         */
+        HttpUtils.sendHttpRequest(HttpConfig.HOME_ARTICLE_URL(0), new CallbackListener() {
+            @Override
+            public void onSuccess(String response) {
+                Gson gson = new Gson();
+                ArticlePages articlePages = gson.fromJson(response, ArticlePages.class);
+            }
 
+            @Override
+            public void onFailure(Call call) {
+                CommonUtils.ToastShow("网络异常！");
+            }
+        });
     }
 
     @Override
