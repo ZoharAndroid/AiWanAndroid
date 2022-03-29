@@ -86,11 +86,14 @@ public class HomeFragment extends BaseFragment {
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mRefreshLayout.isRefreshing();
+                // 开始刷新
+                mRefreshLayout.setRefreshing(true);
                 articleList.clear();
                 currentPage = 0;
                 loadArticleData(currentPage);
                 updateUI();
+                //刷新结束
+                mRefreshLayout.setRefreshing(false);
             }
         });
 
