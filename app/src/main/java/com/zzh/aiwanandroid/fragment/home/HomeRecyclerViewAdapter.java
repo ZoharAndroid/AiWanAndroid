@@ -23,12 +23,11 @@ import java.util.List;
  */
 public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerViewAdapter.ViewHolder> {
 
-    private ArticlePagesData mArticleData;
+
     private List<Article> mArticleDetail;
 
-    public HomeRecyclerViewAdapter(ArticlePages articlePages) {
-        this.mArticleData = articlePages.getData();
-        this.mArticleDetail = mArticleData.getDatas();
+    public HomeRecyclerViewAdapter(List<Article> articles) {
+        this.mArticleDetail = articles;
     }
 
     @NonNull
@@ -88,9 +87,10 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         }
     }
 
+
     @Override
     public int getItemCount() {
-        return mArticleData.getSize();
+        return mArticleDetail.size();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

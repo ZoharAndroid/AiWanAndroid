@@ -11,37 +11,38 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.zzh.aiwanandroid.Constants;
 import com.zzh.aiwanandroid.R;
 import com.zzh.aiwanandroid.base.BaseFragment;
+import com.zzh.aiwanandroid.bean.Article;
 import com.zzh.aiwanandroid.bean.ArticlePages;
+import com.zzh.aiwanandroid.bean.ArticlePagesData;
 import com.zzh.aiwanandroid.config.CallbackListener;
 import com.zzh.aiwanandroid.config.HttpConfig;
 import com.zzh.aiwanandroid.utils.CommonUtils;
 import com.zzh.aiwanandroid.utils.HttpUtils;
 import com.zzh.aiwanandroid.utils.LogUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import okhttp3.Call;
 
 public class HomeFragment extends BaseFragment {
 
     private RecyclerView mHomeRecyclerView;
+    private SwipeRefreshLayout mRefreshLayout;
+
+    private HomeRecyclerViewAdapter adapter;
+
+    private List<Article> articleList;
 
     private static final int SUCCESS_STATUS = 1;
 
-    @SuppressLint("HandlerLeak")
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == SUCCESS_STATUS) {
-                LogUtils.d(msg.obj.toString());
-                updateUI(msg.obj.toString());
-            }
-        }
-    };
+    private int currentPage = 0; // 当前加载的页数
 
     /**
      * 获取HomeFragment实例
@@ -71,27 +72,31 @@ public class HomeFragment extends BaseFragment {
     protected void initView(View view) {
         super.initView(view);
         mHomeRecyclerView = view.findViewById(R.id.home_pager_recycler_view);
+        mRefreshLayout = view.findViewById(R.id.swipe_refresh);
     }
 
     @Override
     protected void initEventAndData() {
-        /**
-         * 请求首页文章数据
-         */
-        HttpUtils.sendHttpRequest(HttpConfig.HOME_ARTICLE_URL(0), new CallbackListener() {
-            @Override
-            public void onSuccess(String response) {
-                Message message = new Message();
-                message.what = SUCCESS_STATUS;
-                message.obj = response;
-                handler.handleMessage(message);
-            }
+        articleList = new ArrayList<>();
+        adapter = new HomeRecyclerViewAdapter(articleList);
+        mHomeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mHomeRecyclerView.setAdapter(adapter);
 
+        // 下拉刷新
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            public void onFailure(Call call) {
-               // CommonUtils.ToastShow("网络异常！");
+            public void onRefresh() {
+                mRefreshLayout.isRefreshing();
+                articleList.clear();
+                currentPage = 0;
+                loadArticleData(currentPage);
+                updateUI();
             }
         });
+
+        //加载文章数据
+        loadArticleData(currentPage);
+
     }
 
     @Override
@@ -99,18 +104,37 @@ public class HomeFragment extends BaseFragment {
         return R.layout.fragment_home;
     }
 
-    private void updateUI(String response) {
+
+    /**
+     * 加载文章数据数据
+     */
+    private void loadArticleData(int page) {
+        // 重新发送请求
+        HttpUtils.sendHttpRequest(HttpConfig.HOME_ARTICLE_URL(page), new CallbackListener() {
+            @Override
+            public void onSuccess(String response) {
+                Gson gson = new Gson();
+                ArticlePages articlePages = gson.fromJson(response, ArticlePages.class);
+                articleList.addAll(articlePages.getData().getDatas());
+                updateUI();
+            }
+
+            @Override
+            public void onFailure(Call call) {
+
+            }
+        });
+    }
+
+
+    private void updateUI() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Gson gson = new Gson();
-                ArticlePages articlePages = gson.fromJson(response, ArticlePages.class);
-                HomeRecyclerViewAdapter adapter = new HomeRecyclerViewAdapter(articlePages);
-                mHomeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                mHomeRecyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         });
-
     }
 
 }
+
