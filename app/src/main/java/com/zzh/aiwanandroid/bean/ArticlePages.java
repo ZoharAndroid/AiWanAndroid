@@ -30,4 +30,12 @@ public class ArticlePages {
     public void setErrorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
     }
+
+    public ArticlePagesData getData() {
+        return data;
+    }
+
+    public void setData(ArticlePagesData data) {
+        this.data = data;
+    }
 }

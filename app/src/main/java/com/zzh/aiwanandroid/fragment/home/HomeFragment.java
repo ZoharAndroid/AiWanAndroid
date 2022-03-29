@@ -1,11 +1,15 @@
 package com.zzh.aiwanandroid.fragment.home;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
@@ -17,12 +21,27 @@ import com.zzh.aiwanandroid.config.CallbackListener;
 import com.zzh.aiwanandroid.config.HttpConfig;
 import com.zzh.aiwanandroid.utils.CommonUtils;
 import com.zzh.aiwanandroid.utils.HttpUtils;
+import com.zzh.aiwanandroid.utils.LogUtils;
 
 import okhttp3.Call;
 
 public class HomeFragment extends BaseFragment {
 
     private RecyclerView mHomeRecyclerView;
+
+    private static final int SUCCESS_STATUS = 1;
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == SUCCESS_STATUS) {
+                LogUtils.d(msg.obj.toString());
+                updateUI(msg.obj.toString());
+            }
+        }
+    };
 
     /**
      * 获取HomeFragment实例
@@ -62,13 +81,15 @@ public class HomeFragment extends BaseFragment {
         HttpUtils.sendHttpRequest(HttpConfig.HOME_ARTICLE_URL(0), new CallbackListener() {
             @Override
             public void onSuccess(String response) {
-                Gson gson = new Gson();
-                ArticlePages articlePages = gson.fromJson(response, ArticlePages.class);
+                Message message = new Message();
+                message.what = SUCCESS_STATUS;
+                message.obj = response;
+                handler.handleMessage(message);
             }
 
             @Override
             public void onFailure(Call call) {
-                CommonUtils.ToastShow("网络异常！");
+               // CommonUtils.ToastShow("网络异常！");
             }
         });
     }
@@ -78,5 +99,18 @@ public class HomeFragment extends BaseFragment {
         return R.layout.fragment_home;
     }
 
+    private void updateUI(String response) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Gson gson = new Gson();
+                ArticlePages articlePages = gson.fromJson(response, ArticlePages.class);
+                HomeRecyclerViewAdapter adapter = new HomeRecyclerViewAdapter(articlePages);
+                mHomeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                mHomeRecyclerView.setAdapter(adapter);
+            }
+        });
+
+    }
 
 }

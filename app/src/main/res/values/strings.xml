@@ -23,9 +23,6 @@
     <string name="new_">NEW</string>
     <string name="release">release</string>
     <string name="author">Author</string>
-    <string name="article_time">2022-3-28 13:35:05</string>
-    <stirng name="super_chapter">Super Chapter</stirng>
     <string name="chapter">chapter</string>
     <string name="fen_ge_fu">/</string>
-    <string name="super_chapter">Supter Chapter</string>
 </resources>

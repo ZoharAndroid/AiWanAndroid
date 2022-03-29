@@ -15,6 +15,8 @@
     <!-- 默认背景颜色 -->
     <color name="background_color">#FDFEFE</color>
 
-    <color name="border_blue">#7FFFD4</color>
+    <color name="border_blue">#6495ED</color>
     <color name="border_red">#DC143C</color>
+
+    <color name="item_background">#F5F5F5</color>
 </resources>
