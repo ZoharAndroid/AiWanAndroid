@@ -25,6 +25,7 @@ import com.zzh.aiwanandroid.config.HttpConfig;
 import com.zzh.aiwanandroid.utils.CommonUtils;
 import com.zzh.aiwanandroid.utils.HttpUtils;
 import com.zzh.aiwanandroid.utils.LogUtils;
+import com.zzh.aiwanandroid.widget.onLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +39,12 @@ public class HomeFragment extends BaseFragment {
 
     private HomeRecyclerViewAdapter adapter;
 
+    private ArticlePages mArticlePages;
     private List<Article> articleList;
 
     private static final int SUCCESS_STATUS = 1;
 
-    private int currentPage = 0; // 当前加载的页数
+    private int currentPage = 603; // 当前加载的页数
 
     /**
      * 获取HomeFragment实例
@@ -82,6 +84,9 @@ public class HomeFragment extends BaseFragment {
         mHomeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mHomeRecyclerView.setAdapter(adapter);
 
+        //加载文章数据
+        loadArticleData(currentPage);
+
         // 下拉刷新
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -97,8 +102,17 @@ public class HomeFragment extends BaseFragment {
             }
         });
 
-        //加载文章数据
-        loadArticleData(currentPage);
+        mHomeRecyclerView.addOnScrollListener(new onLoadMoreListener() {
+            @Override
+            protected void onLoading(int countItem, int lastItem) {
+                LogUtils.d("countItem:" + countItem + ";lastItem:" + lastItem);
+                // 加载更多数据
+                if (currentPage + 1 <= mArticlePages.getData().getPageCount()) {
+                    // 如果当前页面小于等于总页数，直接加载数据显示
+                    loadArticleData(++currentPage);
+                }
+            }
+        });
 
     }
 
@@ -117,8 +131,9 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onSuccess(String response) {
                 Gson gson = new Gson();
-                ArticlePages articlePages = gson.fromJson(response, ArticlePages.class);
-                articleList.addAll(articlePages.getData().getDatas());
+                mArticlePages = gson.fromJson(response, ArticlePages.class);
+                articleList.addAll(mArticlePages.getData().getDatas());
+                adapter.isLastData(mArticlePages.getData().isOver());
                 updateUI();
             }
 

@@ -27,6 +27,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static final int ITEM_CONTENT = 1;
     private static final int ITEM_FOOT = 2;
 
+    private boolean isLastData = false; // 判断是不是所有的最后一条数据
 
     private List<Article> mArticleDetail;
 
@@ -44,12 +45,27 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    /**
+     * 判断是否到达最后一项数据了
+     *
+     * @param isLastData
+     * @return
+     */
+    protected boolean isLastData(boolean isLastData) {
+        return this.isLastData = isLastData;
+    }
+
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == ITEM_FOOT) {
-            View footView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_footer_layout, parent, false);
-            return new FootViewHolder(footView);
+            if (isLastData) {
+                View lastView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_footer_lastitem_layout,parent,false);
+                return new LastFootViewHolder(lastView);
+            } else {
+                View footView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_footer_layout, parent, false);
+                return new FootViewHolder(footView);
+            }
         } else {
             // 如果是正常内容
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_article, parent, false);
@@ -83,8 +99,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == ITEM_FOOT) {
-           LogUtils.d("滑到底了---");
-        }else{
+
+        } else {
             ViewHolder contentViewHolder = (ViewHolder) holder;
             Article article = mArticleDetail.get(position);
             if (article.isFresh()) {
@@ -118,6 +134,16 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         return mArticleDetail.size() == 0 ? 0 : mArticleDetail.size() + 1;
     }
 
+
+    /**
+     * 最后一项数据显示的ITEM
+     */
+    static class LastFootViewHolder extends RecyclerView.ViewHolder{
+
+        public LastFootViewHolder(@NonNull View itemView) {
+            super(itemView);
+        }
+    }
 
     /**
      * 底部加载
