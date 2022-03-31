@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         BottomNavigationView mBottomView = findViewById(R.id.bottom_navigation);
         FrameLayout mContentGroupFrameLayout = findViewById(R.id.content_group);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         if (actionBar != null) {
             // 隐藏系统自带的图标
             actionBar.setDisplayHomeAsUpEnabled(true);
+            // 隐藏系统应用名
+            actionBar.setDisplayShowTitleEnabled(false);
             // 设置新的图标
             actionBar.setHomeAsUpIndicator(R.mipmap.icon_menu_nav);
         }

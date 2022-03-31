@@ -44,7 +44,7 @@ public class HomeFragment extends BaseFragment {
 
     private static final int SUCCESS_STATUS = 1;
 
-    private int currentPage = 603; // 当前加载的页数
+    private int currentPage = 0; // 当前加载的页数
 
     /**
      * 获取HomeFragment实例
@@ -133,7 +133,8 @@ public class HomeFragment extends BaseFragment {
                 Gson gson = new Gson();
                 mArticlePages = gson.fromJson(response, ArticlePages.class);
                 articleList.addAll(mArticlePages.getData().getDatas());
-                adapter.isLastData(mArticlePages.getData().isOver());
+                LogUtils.d(mArticlePages.getData().isOver()+"  ");
+                adapter.setIsLastData(mArticlePages.getData().isOver());
                 updateUI();
             }
 

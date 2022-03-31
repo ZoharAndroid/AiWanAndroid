@@ -1,5 +1,6 @@
 package com.zzh.aiwanandroid.fragment.home;
 
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static final int ITEM_CONTENT = 1;
     private static final int ITEM_FOOT = 2;
 
-    private boolean isLastData = false; // 判断是不是所有的最后一条数据
+    private boolean isLastData; // 判断是不是所有的最后一条数据
 
     private List<Article> mArticleDetail;
 
@@ -39,29 +40,29 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     public int getItemViewType(int position) {
         if (position == mArticleDetail.size()) {
             //如果滑动到最底下了
+            LogUtils.d("POSITION:" + position + ";size:" + mArticleDetail.size());
             return ITEM_FOOT;
         } else {
             return ITEM_CONTENT;
         }
     }
 
-    /**
-     * 判断是否到达最后一项数据了
-     *
-     * @param isLastData
-     * @return
-     */
-    protected boolean isLastData(boolean isLastData) {
-        return this.isLastData = isLastData;
+
+    protected void setIsLastData(boolean lastData) {
+        this.isLastData = lastData;
     }
+
+    protected boolean getIsLastData() {
+        return this.isLastData;
+    }
+
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         if (viewType == ITEM_FOOT) {
-            if (isLastData) {
-                View lastView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_footer_lastitem_layout,parent,false);
-                return new LastFootViewHolder(lastView);
+            if (getIsLastData()) {
+                return new LastFootViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_footer_lastitem_layout, parent, false));
             } else {
                 View footView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_footer_layout, parent, false);
                 return new FootViewHolder(footView);
@@ -138,7 +139,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     /**
      * 最后一项数据显示的ITEM
      */
-    static class LastFootViewHolder extends RecyclerView.ViewHolder{
+    static class LastFootViewHolder extends RecyclerView.ViewHolder {
 
         public LastFootViewHolder(@NonNull View itemView) {
             super(itemView);
