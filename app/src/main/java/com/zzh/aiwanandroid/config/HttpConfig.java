@@ -25,7 +25,7 @@ public class HttpConfig {
     }
 
     /**
-     * .2 首页banner
+     * 2 首页banner
      * https://www.wanandroid.com/banner/json
      *
      * 方法：GET
@@ -36,9 +36,9 @@ public class HttpConfig {
 
 
     /**
-     * 1.5 置顶文章
+     * 3 置顶文章
      *
      * https://www.wanandroid.com/article/top/json
      */
-
+    public static String HOME_TOP_URL = "https://www.wanandroid.com/article/top/json";
 }

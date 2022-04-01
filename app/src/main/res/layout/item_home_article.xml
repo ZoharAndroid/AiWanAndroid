@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
+    android:layout_height="135dp"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -24,7 +24,7 @@
             android:gravity="center"
             android:text="@string/top"
             android:textColor="@color/border_red"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:visibility="gone" />
 
         <TextView
@@ -39,7 +39,7 @@
             android:gravity="center"
             android:text="@string/new_"
             android:textColor="@color/border_red"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:visibility="gone" />
 
         <TextView
@@ -54,10 +54,11 @@
             android:gravity="center"
             android:text="@string/release"
             android:textColor="@color/border_blue"
-            android:textSize="12sp"
+            android:textSize="11sp"
             android:visibility="gone" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/item_article_tags"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -67,9 +68,8 @@
             android:layout_toEndOf="@id/item_article_release"
             android:background="@drawable/textview_border"
             android:gravity="center"
-            android:text="@string/release"
             android:textColor="@color/border_blue"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <TextView
             android:id="@+id/item_article_author"
@@ -83,7 +83,7 @@
             android:gravity="center"
             android:text="@string/author"
             android:textColor="@color/icon_gray"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
 
         <TextView
             android:id="@+id/item_article_time"
@@ -110,7 +110,6 @@
         android:layout_marginBottom="5dp"
         android:layout_weight="1"
         android:ellipsize="end"
-        android:lineSpacingMultiplier="1.2"
         android:maxLines="2"
         android:textColor="@color/black"
         android:textSize="16sp" />

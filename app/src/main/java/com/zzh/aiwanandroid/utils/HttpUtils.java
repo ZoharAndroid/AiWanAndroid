@@ -17,8 +17,6 @@ import okhttp3.Response;
 
 public class HttpUtils {
 
-    private static final String TAG = "HttpUtils";
-
     /**
      * 发送Http请求
      *

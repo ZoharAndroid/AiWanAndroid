@@ -53,8 +53,6 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         if (position == 0) {
             return ITEM_HEADER;
         } else if (position == mArticleDetail.size()) {
-            //如果滑动到最底下了
-            LogUtils.d("POSITION:" + position + ";size:" + mArticleDetail.size());
             return ITEM_FOOT;
         } else {
             return ITEM_CONTENT;
@@ -120,10 +118,11 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             Banner banner = headerViewHolder.banner;
             // 获取banner加载的数据
-            // todo:
             banner.setAdapter(new ImageNetAdapter(mBannerRoot.getData()))
                     // 设置指示器
                     .setIndicator(new CircleIndicator(((HeaderViewHolder) holder).banner.getContext()))
+                    // 设置指示器选中的颜色
+                    .setIndicatorSelectedColor(banner.getContext().getResources().getColor(R.color.background_color))
                     .setIndicatorGravity(IndicatorConfig.Direction.RIGHT)
                     .setIndicatorMargins(new IndicatorConfig.Margins(0, 0, BannerConfig.INDICATOR_MARGIN, BannerUtils.dp2px(5)));
 
@@ -134,15 +133,20 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 // 判断是否是新上线的
                 contentViewHolder.mNewTextView.setVisibility(View.VISIBLE);
             }
+            // 文章标题
             contentViewHolder.mTitleTextView.setText(article.getTitle());
+            // 日期
             contentViewHolder.mDataTextView.setText(article.getNiceDate());
-            if (article.getTags().isEmpty()) {
-                // 如果tag标签为null
-                contentViewHolder.mAuthorTextView.setText(article.getShareUser());
-            } else {
+            // 设置作者名
+            contentViewHolder.mAuthorTextView.setText(article.getShareUser());
+            // 设置标签
+            if (!article.getTags().isEmpty()) {
+                contentViewHolder.mTagsTextView.setVisibility(View.VISIBLE);
                 contentViewHolder.mTagsTextView.setText(article.getTags().get(0).getName());
             }
+            // 大章节
             contentViewHolder.mSuperChapterTextView.setText(article.getSuperChapterName());
+            // 小章节
             contentViewHolder.mChapterTextView.setText(article.getChapterName());
 
             // 收藏按钮
