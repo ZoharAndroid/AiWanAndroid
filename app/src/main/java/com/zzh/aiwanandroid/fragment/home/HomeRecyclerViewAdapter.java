@@ -11,26 +11,38 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.youth.banner.Banner;
+import com.youth.banner.config.BannerConfig;
+import com.youth.banner.config.IndicatorConfig;
+import com.youth.banner.indicator.CircleIndicator;
+import com.youth.banner.indicator.Indicator;
+import com.youth.banner.util.BannerUtils;
 import com.zzh.aiwanandroid.R;
 import com.zzh.aiwanandroid.bean.Article;
 import com.zzh.aiwanandroid.bean.ArticlePages;
 import com.zzh.aiwanandroid.bean.ArticlePagesData;
+import com.zzh.aiwanandroid.bean.BannerRoot;
+import com.zzh.aiwanandroid.bean.DataBean;
 import com.zzh.aiwanandroid.utils.CommonUtils;
 import com.zzh.aiwanandroid.utils.LogUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 文章首页RecyclerView的Adapter
  */
-public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnLoadBannerListener {
 
     private static final int ITEM_CONTENT = 1;
     private static final int ITEM_FOOT = 2;
+    private static final int ITEM_HEADER = 0;
 
     private boolean isLastData; // 判断是不是所有的最后一条数据
 
     private List<Article> mArticleDetail;
+
+    private BannerRoot mBannerRoot;
 
     public HomeRecyclerViewAdapter(List<Article> articles) {
         this.mArticleDetail = articles;
@@ -38,7 +50,9 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemViewType(int position) {
-        if (position == mArticleDetail.size()) {
+        if (position == 0) {
+            return ITEM_HEADER;
+        } else if (position == mArticleDetail.size()) {
             //如果滑动到最底下了
             LogUtils.d("POSITION:" + position + ";size:" + mArticleDetail.size());
             return ITEM_FOOT;
@@ -46,7 +60,6 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             return ITEM_CONTENT;
         }
     }
-
 
     protected void setIsLastData(boolean lastData) {
         this.isLastData = lastData;
@@ -60,7 +73,10 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == ITEM_FOOT) {
+        if (viewType == ITEM_HEADER) {
+            View headerView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_banner_layout, parent, false);
+            return new HeaderViewHolder(headerView);
+        } else if (viewType == ITEM_FOOT) {
             if (getIsLastData()) {
                 return new LastFootViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_footer_lastitem_layout, parent, false));
             } else {
@@ -70,17 +86,18 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         } else {
             // 如果是正常内容
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home_article, parent, false);
-            ViewHolder holder = new ViewHolder(view);
+            ContentViewHolder holder = new ContentViewHolder(view);
             // item点击事件
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = holder.getAdapterPosition();
-                    Article article = mArticleDetail.get(position);
-                    // todo:item页面点击事件
-                    CommonUtils.ToastShow(article.getTitle());
-                }
-            });
+            holder.itemView.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            int position = holder.getAdapterPosition();
+                            Article article = mArticleDetail.get(position);
+                            // todo:item页面点击事件
+                            CommonUtils.ToastShow(article.getTitle());
+                        }
+                    });
 
             // item中的收藏按钮点击事件
             holder.mCollectImageView.setOnClickListener(new View.OnClickListener() {
@@ -99,10 +116,19 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (getItemViewType(position) == ITEM_FOOT) {
+        if (holder instanceof HeaderViewHolder) {
+            HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
+            Banner banner = headerViewHolder.banner;
+            // 获取banner加载的数据
+            // todo:
+            banner.setAdapter(new ImageNetAdapter(mBannerRoot.getData()))
+                    // 设置指示器
+                    .setIndicator(new CircleIndicator(((HeaderViewHolder) holder).banner.getContext()))
+                    .setIndicatorGravity(IndicatorConfig.Direction.RIGHT)
+                    .setIndicatorMargins(new IndicatorConfig.Margins(0, 0, BannerConfig.INDICATOR_MARGIN, BannerUtils.dp2px(5)));
 
-        } else {
-            ViewHolder contentViewHolder = (ViewHolder) holder;
+        } else if (holder instanceof ContentViewHolder) {
+            ContentViewHolder contentViewHolder = (ContentViewHolder) holder;
             Article article = mArticleDetail.get(position);
             if (article.isFresh()) {
                 // 判断是否是新上线的
@@ -135,6 +161,21 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         return mArticleDetail.size() == 0 ? 0 : mArticleDetail.size() + 1;
     }
 
+    @Override
+    public void onLoadBannerData(BannerRoot bannerRoot) {
+        mBannerRoot = bannerRoot;
+    }
+
+    static class HeaderViewHolder extends RecyclerView.ViewHolder {
+
+        Banner banner;
+
+        public HeaderViewHolder(@NonNull View itemView) {
+            super(itemView);
+            banner = itemView.findViewById(R.id.item_home_banner);
+        }
+    }
+
 
     /**
      * 最后一项数据显示的ITEM
@@ -161,7 +202,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     /**
      * 正常内容的ViewHolder
      */
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ContentViewHolder extends RecyclerView.ViewHolder {
 
         TextView mTopTextView; // 置顶
         TextView mNewTextView; // 新
@@ -173,7 +214,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         ImageView mCollectImageView; // 收藏图标
         TextView mTagsTextView; // tags
 
-        public ViewHolder(@NonNull View itemView) {
+        public ContentViewHolder(@NonNull View itemView) {
             super(itemView);
             mTopTextView = itemView.findViewById(R.id.item_article_top);
             mNewTextView = itemView.findViewById(R.id.item_article_new);
@@ -186,5 +227,4 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTagsTextView = itemView.findViewById(R.id.item_article_tags);
         }
     }
-
 }

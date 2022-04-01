@@ -20,6 +20,7 @@ import com.zzh.aiwanandroid.base.BaseFragment;
 import com.zzh.aiwanandroid.bean.Article;
 import com.zzh.aiwanandroid.bean.ArticlePages;
 import com.zzh.aiwanandroid.bean.ArticlePagesData;
+import com.zzh.aiwanandroid.bean.BannerRoot;
 import com.zzh.aiwanandroid.config.CallbackListener;
 import com.zzh.aiwanandroid.config.HttpConfig;
 import com.zzh.aiwanandroid.utils.CommonUtils;
@@ -86,6 +87,8 @@ public class HomeFragment extends BaseFragment {
 
         //加载文章数据
         loadArticleData(currentPage);
+        // 获取首页banner数据
+        loadBannerData();
 
         // 下拉刷新
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -105,7 +108,6 @@ public class HomeFragment extends BaseFragment {
         mHomeRecyclerView.addOnScrollListener(new onLoadMoreListener() {
             @Override
             protected void onLoading(int countItem, int lastItem) {
-                LogUtils.d("countItem:" + countItem + ";lastItem:" + lastItem);
                 // 加载更多数据
                 if (currentPage + 1 <= mArticlePages.getData().getPageCount()) {
                     // 如果当前页面小于等于总页数，直接加载数据显示
@@ -122,6 +124,23 @@ public class HomeFragment extends BaseFragment {
     }
 
 
+    private void loadBannerData() {
+        HttpUtils.sendHttpRequest(HttpConfig.HOME_BANNER_URL, new CallbackListener() {
+            @Override
+            public void onSuccess(String response) {
+                Gson gson = new Gson();
+                BannerRoot bannerRoot = gson.fromJson(response, BannerRoot.class);
+                // 发送消息更新Banner
+                adapter.onLoadBannerData(bannerRoot);
+            }
+
+            @Override
+            public void onFailure(Call call) {
+
+            }
+        });
+    }
+
     /**
      * 加载文章数据数据
      */
@@ -133,7 +152,6 @@ public class HomeFragment extends BaseFragment {
                 Gson gson = new Gson();
                 mArticlePages = gson.fromJson(response, ArticlePages.class);
                 articleList.addAll(mArticlePages.getData().getDatas());
-                LogUtils.d(mArticlePages.getData().isOver()+"  ");
                 adapter.setIsLastData(mArticlePages.getData().isOver());
                 updateUI();
             }
@@ -154,6 +172,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
     }
+
 
 }
 

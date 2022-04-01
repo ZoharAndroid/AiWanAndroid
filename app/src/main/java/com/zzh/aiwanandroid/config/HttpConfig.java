@@ -31,6 +31,9 @@ public class HttpConfig {
      * 方法：GET
      * 参数：无
      */
+    public static String HOME_BANNER_URL = "https://www.wanandroid.com/banner/json";
+
+
 
     /**
      * 1.5 置顶文章
