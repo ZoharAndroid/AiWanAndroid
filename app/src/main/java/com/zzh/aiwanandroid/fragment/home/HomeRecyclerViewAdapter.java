@@ -1,6 +1,7 @@
 package com.zzh.aiwanandroid.fragment.home;
 
 import android.text.Layout;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.zzh.aiwanandroid.bean.ArticlePages;
 import com.zzh.aiwanandroid.bean.ArticlePagesData;
 import com.zzh.aiwanandroid.bean.BannerRoot;
 import com.zzh.aiwanandroid.bean.DataBean;
+import com.zzh.aiwanandroid.bean.TopArticle;
 import com.zzh.aiwanandroid.utils.CommonUtils;
 import com.zzh.aiwanandroid.utils.LogUtils;
 
@@ -32,7 +34,7 @@ import java.util.List;
 /**
  * 文章首页RecyclerView的Adapter
  */
-public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnLoadBannerListener {
+public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements OnLoadBannerListener, OnLoadTopArticleListener, OnLoadArticleListener {
 
     private static final int ITEM_CONTENT = 1;
     private static final int ITEM_FOOT = 2;
@@ -40,9 +42,14 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private boolean isLastData; // 判断是不是所有的最后一条数据
 
-    private List<Article> mArticleDetail;
+    private List<Article> mArticleDetail; // 文章数据
 
-    private BannerRoot mBannerRoot;
+    private BannerRoot mBannerRoot; // 轮播图数据
+
+
+    public HomeRecyclerViewAdapter() {
+
+    }
 
     public HomeRecyclerViewAdapter(List<Article> articles) {
         this.mArticleDetail = articles;
@@ -50,6 +57,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemViewType(int position) {
+        LogUtils.d("position:" + position + "; size:" + mArticleDetail.size());
         if (position == 0) {
             return ITEM_HEADER;
         } else if (position == mArticleDetail.size()) {
@@ -91,7 +99,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                         @Override
                         public void onClick(View v) {
                             int position = holder.getAdapterPosition();
-                            Article article = mArticleDetail.get(position);
+                            Article article = mArticleDetail.get(position-1);
                             // todo:item页面点击事件
                             CommonUtils.ToastShow(article.getTitle());
                         }
@@ -102,7 +110,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                 @Override
                 public void onClick(View v) {
                     int position = holder.getAdapterPosition();
-                    Article article = mArticleDetail.get(position);
+                    Article article = mArticleDetail.get(position-1);
                     // todo: 发送收藏请求
                     CommonUtils.ToastShow("收藏了");
                 }
@@ -115,30 +123,46 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HeaderViewHolder) {
+            LogUtils.d("onCreateView:" + position);
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
             Banner banner = headerViewHolder.banner;
             // 获取banner加载的数据
-            banner.setAdapter(new ImageNetAdapter(mBannerRoot.getData()))
-                    // 设置指示器
-                    .setIndicator(new CircleIndicator(((HeaderViewHolder) holder).banner.getContext()))
-                    // 设置指示器选中的颜色
-                    .setIndicatorSelectedColor(banner.getContext().getResources().getColor(R.color.background_color))
-                    .setIndicatorGravity(IndicatorConfig.Direction.RIGHT)
-                    .setIndicatorMargins(new IndicatorConfig.Margins(0, 0, BannerConfig.INDICATOR_MARGIN, BannerUtils.dp2px(5)));
-
+            if (mBannerRoot != null) {
+                banner.setAdapter(new ImageNetAdapter(mBannerRoot.getData()))
+                        // 设置指示器
+                        .setIndicator(new CircleIndicator(((HeaderViewHolder) holder).banner.getContext()))
+                        // 设置指示器选中的颜色
+                        .setIndicatorSelectedColor(banner.getContext().getResources().getColor(R.color.background_color))
+                        .setIndicatorGravity(IndicatorConfig.Direction.RIGHT)
+                        .setIndicatorMargins(new IndicatorConfig.Margins(0, 0, BannerConfig.INDICATOR_MARGIN, BannerUtils.dp2px(5)));
+            }
         } else if (holder instanceof ContentViewHolder) {
             ContentViewHolder contentViewHolder = (ContentViewHolder) holder;
-            Article article = mArticleDetail.get(position);
+            Article article = mArticleDetail.get(position-1);
             if (article.isFresh()) {
                 // 判断是否是新上线的
                 contentViewHolder.mNewTextView.setVisibility(View.VISIBLE);
+            }else{
+                contentViewHolder.mNewTextView.setVisibility(View.GONE);
+            }
+            // 如果是置顶文章就显示置顶标识
+            if (article.getType() == 1){
+                contentViewHolder.mTopTextView.setVisibility(View.VISIBLE);
+            }else{
+                contentViewHolder.mTopTextView.setVisibility(View.GONE);
             }
             // 文章标题
             contentViewHolder.mTitleTextView.setText(article.getTitle());
             // 日期
             contentViewHolder.mDataTextView.setText(article.getNiceDate());
-            // 设置作者名
-            contentViewHolder.mAuthorTextView.setText(article.getShareUser());
+            // 设置作者名，如果网站上的文章可能是某位作者author的，也可能是某位分享人shareUser分享的。
+            // 如果是分享人分享的，author 为 null。
+            LogUtils.d(article.getAuthor() + " ---" + article.getShareUser());
+            if (!TextUtils.isEmpty(article.getAuthor())) {
+                contentViewHolder.mAuthorTextView.setText(article.getAuthor());
+            }else {
+                contentViewHolder.mAuthorTextView.setText(article.getShareUser());
+            }
             // 设置标签
             if (!article.getTags().isEmpty()) {
                 contentViewHolder.mTagsTextView.setVisibility(View.VISIBLE);
@@ -162,12 +186,26 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public int getItemCount() {
+        LogUtils.d("getItemCount:" + mArticleDetail.size());
         return mArticleDetail.size() == 0 ? 0 : mArticleDetail.size() + 1;
     }
 
     @Override
     public void onLoadBannerData(BannerRoot bannerRoot) {
         mBannerRoot = bannerRoot;
+    }
+
+    @Override
+    public void getTopArticle(List<Article> topArticles) {
+        LogUtils.d("top--" + topArticles.size());
+        // 获取到topArticle之后
+        mArticleDetail.addAll(topArticles);
+    }
+
+    @Override
+    public void getArticle(List<Article> articles) {
+
+        mArticleDetail.addAll(articles);
     }
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
@@ -231,4 +269,5 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             mTagsTextView = itemView.findViewById(R.id.item_article_tags);
         }
     }
+
 }

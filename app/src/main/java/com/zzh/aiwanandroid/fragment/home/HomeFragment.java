@@ -21,6 +21,7 @@ import com.zzh.aiwanandroid.bean.Article;
 import com.zzh.aiwanandroid.bean.ArticlePages;
 import com.zzh.aiwanandroid.bean.ArticlePagesData;
 import com.zzh.aiwanandroid.bean.BannerRoot;
+import com.zzh.aiwanandroid.bean.TopArticle;
 import com.zzh.aiwanandroid.config.CallbackListener;
 import com.zzh.aiwanandroid.config.HttpConfig;
 import com.zzh.aiwanandroid.utils.CommonUtils;
@@ -85,10 +86,13 @@ public class HomeFragment extends BaseFragment {
         mHomeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mHomeRecyclerView.setAdapter(adapter);
 
-        //加载文章数据
-        loadArticleData(currentPage);
+
         // 获取首页banner数据
         loadBannerData();
+        //加载置顶文章数据
+        loadTopArticleData();
+        //加载文章数据
+        loadArticleData(currentPage);
 
         // 下拉刷新
         mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -124,6 +128,29 @@ public class HomeFragment extends BaseFragment {
     }
 
 
+    /**
+     * 加载首页置顶文章数据
+     */
+    private void loadTopArticleData() {
+        HttpUtils.sendHttpRequest(HttpConfig.HOME_TOP_URL, new CallbackListener() {
+            @Override
+            public void onSuccess(String response) {
+                Gson gson = new Gson();
+                TopArticle topArticle = gson.fromJson(response, TopArticle.class);
+                // 传递数据
+                adapter.getTopArticle(topArticle.getData());
+            }
+
+            @Override
+            public void onFailure(Call call) {
+
+            }
+        });
+    }
+
+    /**
+     * 加载首页banner轮播图片数据
+     */
     private void loadBannerData() {
         HttpUtils.sendHttpRequest(HttpConfig.HOME_BANNER_URL, new CallbackListener() {
             @Override
@@ -151,7 +178,8 @@ public class HomeFragment extends BaseFragment {
             public void onSuccess(String response) {
                 Gson gson = new Gson();
                 mArticlePages = gson.fromJson(response, ArticlePages.class);
-                articleList.addAll(mArticlePages.getData().getDatas());
+                adapter.getArticle(mArticlePages.getData().getDatas());
+                //articleList.addAll(mArticlePages.getData().getDatas());
                 adapter.setIsLastData(mArticlePages.getData().isOver());
                 updateUI();
             }
