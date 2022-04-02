@@ -167,6 +167,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             if (!article.getTags().isEmpty()) {
                 contentViewHolder.mTagsTextView.setVisibility(View.VISIBLE);
                 contentViewHolder.mTagsTextView.setText(article.getTags().get(0).getName());
+            }else{
+                contentViewHolder.mTagsTextView.setVisibility(View.GONE);
             }
             // 大章节
             contentViewHolder.mSuperChapterTextView.setText(article.getSuperChapterName());
