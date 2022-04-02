@@ -1,11 +1,15 @@
 package com.zzh.aiwanandroid.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 文章详细数据
  */
-public class Article {
+public class Article implements Parcelable {
 
     private String apkLink;
     private int audit;
@@ -40,6 +44,53 @@ public class Article {
     private int userId;
     private int visible;
     private int zan;
+
+    protected Article(Parcel in) {
+        apkLink = in.readString();
+        audit = in.readInt();
+        author = in.readString();
+        canEdit = in.readByte() != 0;
+        chapterId = in.readInt();
+        chapterName = in.readString();
+        collect = in.readByte() != 0;
+        courseId = in.readInt();
+        desc = in.readString();
+        descMd = in.readString();
+        envelopePic = in.readString();
+        fresh = in.readByte() != 0;
+        host = in.readString();
+        id = in.readInt();
+        link = in.readString();
+        niceDate = in.readString();
+        niceShareDate = in.readString();
+        origin = in.readString();
+        prefix = in.readString();
+        projectLink = in.readString();
+        publishTime = in.readLong();
+        realSuperChapterId = in.readInt();
+        selfVisible = in.readInt();
+        shareDate = in.readLong();
+        shareUser = in.readString();
+        superChapterId = in.readInt();
+        superChapterName = in.readString();
+        title = in.readString();
+        type = in.readInt();
+        userId = in.readInt();
+        visible = in.readInt();
+        zan = in.readInt();
+    }
+
+    public static final Creator<Article> CREATOR = new Creator<Article>() {
+        @Override
+        public Article createFromParcel(Parcel in) {
+            return new Article(in);
+        }
+
+        @Override
+        public Article[] newArray(int size) {
+            return new Article[size];
+        }
+    };
 
     public String getApkLink() {
         return apkLink;
@@ -303,5 +354,46 @@ public class Article {
 
     public void setZan(int zan) {
         this.zan = zan;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(apkLink);
+        dest.writeInt(audit);
+        dest.writeString(author);
+        dest.writeByte((byte) (canEdit ? 1 : 0));
+        dest.writeInt(chapterId);
+        dest.writeString(chapterName);
+        dest.writeByte((byte) (collect ? 1 : 0));
+        dest.writeInt(courseId);
+        dest.writeString(desc);
+        dest.writeString(descMd);
+        dest.writeString(envelopePic);
+        dest.writeByte((byte) (fresh ? 1 : 0));
+        dest.writeString(host);
+        dest.writeInt(id);
+        dest.writeString(link);
+        dest.writeString(niceDate);
+        dest.writeString(niceShareDate);
+        dest.writeString(origin);
+        dest.writeString(prefix);
+        dest.writeString(projectLink);
+        dest.writeLong(publishTime);
+        dest.writeInt(realSuperChapterId);
+        dest.writeInt(selfVisible);
+        dest.writeLong(shareDate);
+        dest.writeString(shareUser);
+        dest.writeInt(superChapterId);
+        dest.writeString(superChapterName);
+        dest.writeString(title);
+        dest.writeInt(type);
+        dest.writeInt(userId);
+        dest.writeInt(visible);
+        dest.writeInt(zan);
     }
 }

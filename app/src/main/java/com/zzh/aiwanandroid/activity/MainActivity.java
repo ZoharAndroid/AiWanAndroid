@@ -1,4 +1,4 @@
-package com.zzh.aiwanandroid;
+package com.zzh.aiwanandroid.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.zzh.aiwanandroid.R;
 import com.zzh.aiwanandroid.fragment.home.HomeFragment;
 import com.zzh.aiwanandroid.fragment.ProjectFragment;
 import com.zzh.aiwanandroid.fragment.QuestionFragment;
