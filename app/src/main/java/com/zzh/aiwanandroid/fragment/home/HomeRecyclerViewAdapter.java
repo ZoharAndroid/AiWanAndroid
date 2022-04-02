@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.youth.banner.Banner;
 import com.youth.banner.config.BannerConfig;
 import com.youth.banner.config.IndicatorConfig;
@@ -170,6 +171,13 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             }else{
                 contentViewHolder.mTagsTextView.setVisibility(View.GONE);
             }
+            // 显示项目图片
+            if (!TextUtils.isEmpty(article.getEnvelopePic())){
+                contentViewHolder.mProjectImage.setVisibility(View.VISIBLE);
+                Glide.with(contentViewHolder.mProjectImage).load(article.getEnvelopePic()).into(contentViewHolder.mProjectImage);
+            }else{
+                contentViewHolder.mProjectImage.setVisibility(View.GONE);
+            }
             // 大章节
             contentViewHolder.mSuperChapterTextView.setText(article.getSuperChapterName());
             // 小章节
@@ -257,6 +265,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
         TextView mChapterTextView; // 小章节
         ImageView mCollectImageView; // 收藏图标
         TextView mTagsTextView; // tags
+        ImageView mProjectImage; // 项目图片
 
         public ContentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -269,6 +278,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
             mChapterTextView = itemView.findViewById(R.id.item_article_chapter);
             mCollectImageView = itemView.findViewById(R.id.item_article_collect);
             mTagsTextView = itemView.findViewById(R.id.item_article_tags);
+            mProjectImage = itemView.findViewById(R.id.item_article_project_image);
         }
     }
 
