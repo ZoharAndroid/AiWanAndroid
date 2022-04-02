@@ -1,6 +1,5 @@
 package com.zzh.aiwanandroid.base;
 
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -13,10 +12,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.zzh.aiwanandroid.R;
+import com.zzh.aiwanandroid.fragment.OnLoadFragmentListener;
 
-import java.lang.reflect.Field;
-
-public class ExampleBaseActivity extends BaseActivity {
+public  class ExampleBaseActivity extends BaseActivity{
 
     private TextView mExampleTitle;
     private Toolbar mExampleToolbar;
@@ -38,6 +36,7 @@ public class ExampleBaseActivity extends BaseActivity {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
             supportActionBar.setHomeAsUpIndicator(R.mipmap.icon_back);
         }
+
     }
 
     @Override
@@ -76,16 +75,6 @@ public class ExampleBaseActivity extends BaseActivity {
         return true;
     }
 
-
-    /**
-     * 添加Fragment到Activity
-     *
-     * @param fragment
-     */
-    protected void createContent(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().add(R.id.example_content_container, fragment).commit();
-    }
-
     /**
      * 设置标题栏标题
      *
@@ -100,5 +89,15 @@ public class ExampleBaseActivity extends BaseActivity {
     @Override
     protected int getLayoutId() {
         return R.layout.example_activity_layout;
+    }
+
+
+    /**
+     * 给Content添加Fragment
+     *
+     * @param fragment
+     */
+    public void setContentFragment(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction().add(R.id.example_content_container,fragment).commit();
     }
 }
