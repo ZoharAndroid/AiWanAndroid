@@ -18,14 +18,12 @@ public  class ExampleBaseActivity extends BaseActivity{
 
     private TextView mExampleTitle;
     private Toolbar mExampleToolbar;
-    private FrameLayout mExampleContainer;
 
     @Override
     protected void initView() {
         super.initView();
 
         mExampleTitle = findViewById(R.id.example_content_title);
-        mExampleContainer = findViewById(R.id.example_content_container);
         mExampleToolbar = findViewById(R.id.example_content_toolbar);
 
         // 设置toolbar
