@@ -102,6 +102,9 @@ public class HomeFragment extends BaseFragment {
                 mRefreshLayout.setRefreshing(true);
                 articleList.clear();
                 currentPage = 0;
+                // 加载置顶文章
+                loadTopArticleData();
+                // 加载普通文章
                 loadArticleData(currentPage);
                 updateUI();
                 //刷新结束
