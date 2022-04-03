@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -64,7 +65,9 @@ public class MainActivity extends AppCompatActivity {
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonUtils.ToastShow("FloatingActionButton");
+                //  回到顶部
+                RecyclerView homeRecyclerView = mHomeFragment.getView().findViewById(R.id.home_pager_recycler_view);
+                homeRecyclerView.smoothScrollToPosition(0);
             }
         });
 

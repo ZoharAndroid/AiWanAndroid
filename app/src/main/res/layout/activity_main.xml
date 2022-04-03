@@ -45,37 +45,39 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            app:layout_behavior=".widget.ScaleDownShowBehavior"
             android:id="@+id/floating_action_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="70dp"
             android:contentDescription="@string/up"
             android:elevation="8dp"
-            android:src="@mipmap/icon_up_arrow" />
+            android:src="@mipmap/icon_up_arrow"
+            app:backgroundTint="@color/purple_700"
+            app:fabCustomSize="45dp"
+            app:layout_behavior=".widget.ScaleDownShowBehavior" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            app:layout_behavior="com.zzh.aiwanandroid.widget.BottomNavigationViewBehavior"
-            app:elevation="16dp"
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="@color/navigation_background_gray"
+            app:elevation="16dp"
             app:labelVisibilityMode="labeled"
+            app:layout_behavior="com.zzh.aiwanandroid.widget.BottomNavigationViewBehavior"
             app:menu="@menu/bottom_navigation_menu" />
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:fitsSystemWindows="true"
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        android:fitsSystemWindows="true"
         app:headerLayout="@layout/header_navigation_layout"
         app:menu="@menu/nav_view_menu">
 
