@@ -7,19 +7,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.FrameMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.zzh.aiwanandroid.Constants;
 import com.zzh.aiwanandroid.R;
 import com.zzh.aiwanandroid.fragment.home.HomeFragment;
 import com.zzh.aiwanandroid.fragment.ProjectFragment;
@@ -28,20 +32,33 @@ import com.zzh.aiwanandroid.fragment.SystemFragment;
 import com.zzh.aiwanandroid.fragment.WechatFragment;
 import com.zzh.aiwanandroid.utils.CommonUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private TextView mTitleTextView;
+    private Toolbar toolbar;
+    private FloatingActionButton mFloatingActionButton;
+    private NavigationView mNavigationView;
+    private BottomNavigationView mBottomView;
+
+    private int mLastFragmentIndex;
+    private Fragment mHomeFragment;
+    private List<Fragment> mFragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView mBottomView = findViewById(R.id.bottom_navigation);
+        mBottomView = findViewById(R.id.bottom_navigation);
         FrameLayout mContentGroupFrameLayout = findViewById(R.id.content_group);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         mDrawerLayout = findViewById(R.id.drawer_layout_main);
-        NavigationView mNavigationView = findViewById(R.id.navigation_view);
-        FloatingActionButton mFloatingActionButton = findViewById(R.id.floating_action_button);
+        mTitleTextView = findViewById(R.id.toolbar_textview);
+        mNavigationView = findViewById(R.id.navigation_view);
+        mFloatingActionButton = findViewById(R.id.floating_action_button);
 
         // 将toolbar设置Actionbar
         setSupportActionBar(toolbar);
@@ -57,9 +74,19 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.mipmap.icon_menu_nav);
         }
 
-        // 默认开启Home页面
-        Fragment mHomeFragment = HomeFragment.getInstance(null, null);
-        getSupportFragmentManager().beginTransaction().add(R.id.content_group, mHomeFragment).commit();
+        // 设置标题栏
+        setToolbarTitle(getResources().getString(R.string.bottom_home));
+
+
+        initEventAndData();
+        if (savedInstanceState == null) {
+            initPager(false, Constants.TYPE_MAIN);
+        }
+
+    }
+
+    private void initEventAndData() {
+        mFragments = new ArrayList<>();
 
         // 给FloatingActionButton设置点击事件
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -111,24 +138,29 @@ public class MainActivity extends AppCompatActivity {
 
         // 给底部导航栏添加点击事件
         mBottomView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.bottom_home:
-                        switchFragment(HomeFragment.getInstance(null, null));
+                        // 选中的是home
+                        switchFragment(Constants.TYPE_MAIN);
+                        setToolbarTitle(getResources().getString(R.string.bottom_home));
                         return true;
                     case R.id.bottom_question:
-                        switchFragment(QuestionFragment.getInstance(null, null));
+                        switchFragment(Constants.TYPE_QUESTION);
+                        setToolbarTitle(getResources().getString(R.string.bottom_question));
                         return true;
                     case R.id.bottom_wechat:
-                        switchFragment(WechatFragment.getInstance(null, null));
+                        switchFragment(Constants.TYPE_WEHCHAT);
+                        setToolbarTitle(getResources().getString(R.string.bottom_wechat));
                         return true;
                     case R.id.bottom_system:
-                        switchFragment(SystemFragment.getInstance(null, null));
+                        switchFragment(Constants.TYPE_SYSTEM);
+                        setToolbarTitle(getResources().getString(R.string.bottom_system));
                         return true;
                     case R.id.bottom_project:
-                        switchFragment(ProjectFragment.getInstance(null, null));
+                        switchFragment(Constants.TYPE_PROJECT);
+                        setToolbarTitle(getResources().getString(R.string.bottom_home));
                         return true;
                 }
                 return false;
@@ -136,6 +168,32 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+    /**
+     * 初始化界面
+     */
+    private void initPager(boolean isCreated, int position) {
+        mHomeFragment = HomeFragment.getInstance(null, null);
+        mFragments.add(mHomeFragment);
+        initFragments();
+        switchFragment(Constants.TYPE_MAIN);
+    }
+
+    private void initFragments() {
+        Fragment mQuestionFragment = QuestionFragment.getInstance(null, null);
+        Fragment mWechatFragment = WechatFragment.getInstance(null, null);
+        Fragment mSystemFragment = SystemFragment.getInstance(null, null);
+        Fragment mProjectFragment = ProjectFragment.getInstance(null, null);
+
+        mFragments.add(mQuestionFragment);
+        mFragments.add(mWechatFragment);
+        mFragments.add(mSystemFragment);
+        mFragments.add(mProjectFragment);
+
+
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -169,11 +227,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * 设置标题栏
+     *
+     * @param title
+     */
+    private void setToolbarTitle(String title) {
+        mTitleTextView.setText(title);
+        toolbar.setSelected(true);
+    }
+
+    /**
      * 切换Fragment
      *
-     * @param fragment
+     * @param position
      */
-    private void switchFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_group, fragment).commit();
+    private void switchFragment(int position) {
+        if (position > mFragments.size()) {
+            return;
+        }
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        Fragment targetFragment = mFragments.get(position);
+        Fragment lastFragment = mFragments.get(mLastFragmentIndex);
+        mLastFragmentIndex = position;
+        fragmentTransaction.hide(lastFragment);
+        if (!targetFragment.isAdded()) {
+            getSupportFragmentManager().beginTransaction().remove(targetFragment).commit();
+            fragmentTransaction.add(R.id.content_group, targetFragment);
+        }
+        fragmentTransaction.show(targetFragment);
+        fragmentTransaction.commit();
     }
+
 }
