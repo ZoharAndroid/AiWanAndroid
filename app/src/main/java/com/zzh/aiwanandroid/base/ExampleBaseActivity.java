@@ -1,5 +1,6 @@
 package com.zzh.aiwanandroid.base;
 
+import android.icu.util.MeasureUnit;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
@@ -18,6 +19,8 @@ public  class ExampleBaseActivity extends BaseActivity{
 
     private TextView mExampleTitle;
     private Toolbar mExampleToolbar;
+
+    private Menu mMenu;
 
     @Override
     protected void initView() {
@@ -70,7 +73,13 @@ public  class ExampleBaseActivity extends BaseActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
         // 创建菜单
         getMenuInflater().inflate(R.menu.tool_bar_menu, menu);
+        mMenu = menu;
         return true;
+    }
+
+    protected void setMenuItemIsShow(int id,boolean isShow){
+        MenuItem item = mMenu.findItem(id);
+        item.setVisible(isShow);
     }
 
     /**
@@ -98,4 +107,5 @@ public  class ExampleBaseActivity extends BaseActivity{
     public void setContentFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().add(R.id.example_content_container,fragment).commit();
     }
+
 }

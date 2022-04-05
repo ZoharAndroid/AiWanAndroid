@@ -5,7 +5,8 @@ public class Constants {
     public static final String param1 = "param1";
     public static final String param2 = "param2";
 
-    public static final String intent_extra = "intent_extra";
+    public static final String intent_extra_url = "intent_extra_url";
+    public static final String intent_extra_title = "intent_extra_title";
 
     /**
      * bottom pager fragment tags

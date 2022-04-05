@@ -51,6 +51,7 @@ public class ContentFragment extends BaseFragment {
 
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(true);
+        settings.setDomStorageEnabled(true);
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override

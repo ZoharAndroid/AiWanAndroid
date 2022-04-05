@@ -204,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
         MenuItem collectItem = menu.findItem(R.id.menu_collection);
         MenuItem shareItem =menu.findItem(R.id.menu_share);
         MenuItem explorerItem = menu.findItem(R.id.menu_explorer);
+        searchItem.setVisible(true);
         collectItem.setVisible(false);
         shareItem.setVisible(false);
         explorerItem.setVisible(false);

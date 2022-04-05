@@ -1,7 +1,9 @@
 package com.zzh.aiwanandroid.fragment.home;
 
+import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -10,7 +12,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.youth.banner.adapter.BannerAdapter;
 import com.youth.banner.holder.BannerImageHolder;
 import com.youth.banner.util.BannerUtils;
+import com.zzh.aiwanandroid.Constants;
 import com.zzh.aiwanandroid.R;
+import com.zzh.aiwanandroid.activity.ContentActivity;
 import com.zzh.aiwanandroid.bean.BannerRoot;
 import com.zzh.aiwanandroid.bean.DataBean;
 
@@ -26,7 +30,10 @@ public class ImageNetAdapter extends BannerAdapter<BannerRoot.Banner, ImageTitle
     @Override
     public ImageTitleHolder onCreateHolder(ViewGroup parent, int viewType) {
 
-        return new ImageTitleHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.banner_image,parent,false));
+        ImageTitleHolder holder =
+                new ImageTitleHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.banner_image, parent, false));
+
+        return holder;
 
     }
 
@@ -42,5 +49,16 @@ public class ImageNetAdapter extends BannerAdapter<BannerRoot.Banner, ImageTitle
 //                .apply(RequestOptions.bitmapTransform(new RoundedCorners(30)))
                 .into(holder.imageView);
         holder.title.setText(data.getTitle());
+
+        // Banner的点击事件
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(holder.itemView.getContext(), ContentActivity.class);
+                intent.putExtra(Constants.intent_extra_url,data.getUrl());
+                intent.putExtra(Constants.intent_extra_title,data.getTitle());
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 }

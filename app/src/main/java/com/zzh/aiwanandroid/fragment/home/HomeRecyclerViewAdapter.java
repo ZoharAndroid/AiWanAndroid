@@ -105,7 +105,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.V
                             Article article = mArticleDetail.get(position - 1);
                             // 跳转到新的页面
                             Intent intent = new Intent(view.getContext(), ContentActivity.class);
-                            intent.putExtra(Constants.intent_extra, article);
+                            intent.putExtra(Constants.intent_extra_title, article.getTitle());
+                            intent.putExtra(Constants.intent_extra_url,article.getLink());
                             view.getContext().startActivity(intent);
                         }
                     });
