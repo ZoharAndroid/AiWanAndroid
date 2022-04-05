@@ -199,6 +199,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // 创建toolbar 右侧菜单
         getMenuInflater().inflate(R.menu.tool_bar_menu, menu);
+        // 只显示搜索按钮，其余的隐藏
+        MenuItem searchItem = menu.findItem(R.id.menu_search);
+        MenuItem collectItem = menu.findItem(R.id.menu_collection);
+        MenuItem shareItem =menu.findItem(R.id.menu_share);
+        MenuItem explorerItem = menu.findItem(R.id.menu_explorer);
+        collectItem.setVisible(false);
+        shareItem.setVisible(false);
+        explorerItem.setVisible(false);
         return true;
     }
 
@@ -210,17 +218,19 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 break;
+            case R.id.menu_search:
+                // 搜索
+
+                break;
             case R.id.menu_share:
                 // 分享
 
                 break;
             case R.id.menu_collection:
                 // 收藏
-
                 break;
             case R.id.menu_explorer:
                 // 浏览器打开
-
                 break;
         }
         return true;
