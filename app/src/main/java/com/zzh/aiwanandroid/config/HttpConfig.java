@@ -41,4 +41,15 @@ public class HttpConfig {
      * https://www.wanandroid.com/article/top/json
      */
     public static String HOME_TOP_URL = "https://www.wanandroid.com/article/top/json";
+
+    /**
+     *
+     * 搜索热词
+     *
+     * https://www.wanandroid.com//hotkey/json
+     *
+     * 方法：GET
+     * 参数：无
+     */
+    public static String HOT_KEY_URL = "https://www.wanandroid.com//hotkey/json";
 }

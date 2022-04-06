@@ -76,6 +76,7 @@ public class SearchActivity extends ExampleBaseActivity {
                 break;
             case R.id.menu_search:
                 // 搜索
+                // todo: 开启搜索界面
                 LogUtils.d(mSearchContent);
                 break;
         }

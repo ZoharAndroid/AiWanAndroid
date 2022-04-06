@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.Gson;
 import com.zzh.aiwanandroid.config.CallbackListener;
 
 import java.io.IOException;
@@ -41,7 +42,20 @@ public class HttpUtils {
                 listener.onSuccess(response.body().string());
             }
         });
+    }
 
 
+    /**
+     * 解析Json数据
+     *
+     * @param response
+     * @param classOfT
+     * @param <T>
+     * @return
+     */
+    public static <T> T parseJson(String response,Class<T> classOfT){
+        Gson gson = new Gson();
+        T t = gson.fromJson(response, classOfT);
+        return t;
     }
 }

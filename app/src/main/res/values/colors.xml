@@ -8,6 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+    <color name="text_color">#566573</color>
+    <color name="text_color_bg">#ECF0F1</color>
     <!-- 图标默认颜色 -->
     <color name="icon_gray">#8a8a8a</color>
     <!-- 底部导航栏默认背景颜色 -->
@@ -19,4 +21,11 @@
     <color name="border_red">#DC143C</color>
 
     <color name="item_background">#F5F5F5</color>
+
+    <color name="text_color_1">#B03A2E</color>
+    <color name="text_color_2">#6C3483</color>
+    <color name="text_color_3">#117864</color>
+    <color name="text_color_4">#9C640C</color>
+    <color name="text_color_5">#273746</color>
+    <color name="text_color_6">#2874A6</color>
 </resources>
