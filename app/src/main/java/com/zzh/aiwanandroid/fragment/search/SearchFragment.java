@@ -112,7 +112,18 @@ public class SearchFragment extends BaseFragment {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
                 mSearchContent = mHotKeyList.get(position).getName();
+                HttpUtils.sendPostRequest(HttpConfig.QUERY_URL(0), mSearchContent, new CallbackListener() {
+                    @Override
+                    public void onSuccess(String response) {
+                        // todo:解析post请求发送过来的内容
+                        LogUtils.d(mSearchContent + "------"+response);
+                    }
 
+                    @Override
+                    public void onFailure(Call call) {
+
+                    }
+                });
                 startSearchResultActivity(mSearchContent);
                 return true;
             }

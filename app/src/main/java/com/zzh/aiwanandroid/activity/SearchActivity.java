@@ -11,8 +11,13 @@ import androidx.annotation.NonNull;
 
 import com.zzh.aiwanandroid.R;
 import com.zzh.aiwanandroid.base.ExampleBaseActivity;
+import com.zzh.aiwanandroid.config.CallbackListener;
+import com.zzh.aiwanandroid.config.HttpConfig;
 import com.zzh.aiwanandroid.fragment.search.SearchFragment;
+import com.zzh.aiwanandroid.utils.HttpUtils;
 import com.zzh.aiwanandroid.utils.LogUtils;
+
+import okhttp3.Call;
 
 public class SearchActivity extends ExampleBaseActivity {
 
@@ -78,6 +83,17 @@ public class SearchActivity extends ExampleBaseActivity {
                 // 搜索
                 // todo: 开启搜索界面
                 LogUtils.d(mSearchContent);
+                HttpUtils.sendPostRequest(HttpConfig.QUERY_URL(0), mSearchContent, new CallbackListener() {
+                    @Override
+                    public void onSuccess(String response) {
+                        LogUtils.d(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call call) {
+
+                    }
+                });
                 break;
         }
         return true;
