@@ -28,4 +28,5 @@
     <string name="loading">Loading</string>
     <string name="loading_over">No data...</string>
     <string name="menu_search">Search</string>
+    <string name="search_hint">Searching for more article</string>
 </resources>

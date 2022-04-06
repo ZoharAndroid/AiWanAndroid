@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.FrameMetrics;
 import android.view.Menu;
@@ -221,7 +222,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menu_search:
                 // 搜索
-
+                Intent intent = new Intent(this,SearchActivity.class);
+                startActivity(intent);
                 break;
             case R.id.menu_share:
                 // 分享

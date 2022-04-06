@@ -3,7 +3,11 @@ package com.zzh.aiwanandroid.base;
 import android.icu.util.MeasureUnit;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -19,8 +23,9 @@ public  class ExampleBaseActivity extends BaseActivity{
 
     private TextView mExampleTitle;
     private Toolbar mExampleToolbar;
-
-    private Menu mMenu;
+    private LinearLayout mExampleSearchContainer;
+    private EditText mExampleSearchEdit;
+    private ImageView mExampleSearchDismiss;
 
     @Override
     protected void initView() {
@@ -28,6 +33,9 @@ public  class ExampleBaseActivity extends BaseActivity{
 
         mExampleTitle = findViewById(R.id.example_content_title);
         mExampleToolbar = findViewById(R.id.example_content_toolbar);
+        mExampleSearchContainer = findViewById(R.id.search_container);
+        mExampleSearchEdit = findViewById(R.id.search_edit_text);
+        mExampleSearchDismiss = findViewById(R.id.search_image_dismiss);
 
         // 设置toolbar
         setSupportActionBar(mExampleToolbar);
@@ -46,41 +54,45 @@ public  class ExampleBaseActivity extends BaseActivity{
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // 返回上一级
-                finish();
-                break;
-            case R.id.menu_share:
-                // 分享
 
-                break;
-            case R.id.menu_collection:
-                // 收藏
+    protected EditText getSearchEditText(){
+        return mExampleSearchEdit;
+    }
 
-                break;
-            case R.id.menu_explorer:
-                // 用浏览器打开
+    protected ImageView getSearchImageView(){
+        return mExampleSearchDismiss;
+    }
 
-                break;
+    /**
+     * 是否显示Toolbar标题
+     *
+     * @param isShow
+     */
+    protected void showTitleTextView(boolean isShow){
+        if (isShow){
+            mExampleTitle.setVisibility(View.VISIBLE);
+        }else{
+            mExampleTitle.setVisibility(View.GONE);
         }
-        return true;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // 创建菜单
-        getMenuInflater().inflate(R.menu.tool_bar_menu, menu);
-        mMenu = menu;
-        return true;
+    /**
+     * 是否显示Edit
+     *
+     * @param isShow
+     */
+    protected void showEditTextView(boolean isShow){
+        if (isShow){
+            mExampleSearchContainer.setVisibility(View.VISIBLE);
+        }else{
+            mExampleSearchContainer.setVisibility(View.GONE);
+        }
+
     }
 
-    protected void setMenuItemIsShow(int id,boolean isShow){
-        MenuItem item = mMenu.findItem(id);
-        item.setVisible(isShow);
-    }
+
+
+
 
     /**
      * 设置标题栏标题
