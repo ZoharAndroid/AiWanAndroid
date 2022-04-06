@@ -29,4 +29,8 @@
     <string name="loading_over">No data...</string>
     <string name="menu_search">Search</string>
     <string name="search_hint">Searching for more article</string>
+    <string name="hot_search">Hot Search</string>
+    <string name="search_history">Search History</string>
+    <string name="clear_all">Clear All</string>
+    <string name="search_show">Hurry up search dry article!</string>
 </resources>

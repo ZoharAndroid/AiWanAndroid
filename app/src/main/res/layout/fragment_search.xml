@@ -1,13 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="5dp"
     android:orientation="vertical">
+
+    <TextView
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hot_search"
+        android:textColor="@color/teal_700"
+        android:textSize="18sp" />
+
+    <com.zhy.view.flowlayout.TagFlowLayout
+        android:id="@+id/tag_search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:max_select="1" />
+
+    <RelativeLayout
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_history"
+            android:textColor="@color/teal_700"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/text_view_clear_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="@string/clear_all"
+            android:textColor="@color/icon_gray"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/search_result_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/text_view_search_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:text="@string/search_show"
+        android:textColor="@color/icon_gray"
+        android:textSize="16sp" />
 
 </LinearLayout>

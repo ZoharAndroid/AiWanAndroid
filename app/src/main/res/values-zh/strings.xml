@@ -29,4 +29,8 @@
     <string name="loading_over">暂无更多数据...</string>
     <string name="menu_search">搜索</string>
     <string name="search_hint">搜索发现更多干货</string>
+    <string name="hot_search">热门搜索</string>
+    <string name="search_history">搜索历史</string>
+    <string name="clear_all">清空</string>
+    <string name="search_show">快来搜点干货吧(#^.^#)</string>
 </resources>

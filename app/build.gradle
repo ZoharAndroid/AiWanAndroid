@@ -37,6 +37,7 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-alpha01'
     implementation 'io.github.youth5201314:banner:2.2.2'
     implementation 'com.github.bumptech.glide:glide:4.13.1'
+    implementation 'com.hyman:flowlayout-lib:1.1.2'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
