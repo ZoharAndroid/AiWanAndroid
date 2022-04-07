@@ -2,6 +2,7 @@ package com.zzh.aiwanandroid.fragment.search;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,10 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 import com.zzh.aiwanandroid.Constants;
 import com.zzh.aiwanandroid.R;
+import com.zzh.aiwanandroid.activity.ResultActivity;
+import com.zzh.aiwanandroid.activity.SearchActivity;
 import com.zzh.aiwanandroid.base.BaseFragment;
+import com.zzh.aiwanandroid.bean.ArticlePages;
 import com.zzh.aiwanandroid.bean.HotKeyBean;
 import com.zzh.aiwanandroid.config.CallbackListener;
 import com.zzh.aiwanandroid.config.HttpConfig;
@@ -112,28 +116,15 @@ public class SearchFragment extends BaseFragment {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
                 mSearchContent = mHotKeyList.get(position).getName();
-                HttpUtils.sendPostRequest(HttpConfig.QUERY_URL(0), mSearchContent, new CallbackListener() {
-                    @Override
-                    public void onSuccess(String response) {
-                        // todo:解析post请求发送过来的内容
-                        LogUtils.d(mSearchContent + "------"+response);
-                    }
-
-                    @Override
-                    public void onFailure(Call call) {
-
-                    }
-                });
-                startSearchResultActivity(mSearchContent);
+                // 发送到结果展示Activity
+                Intent intent = new Intent(view.getContext(), ResultActivity.class);
+                intent.putExtra(Constants.intent_extra_title, mSearchContent);
+                startActivity(intent);
                 return true;
             }
         });
     }
 
-    private void startSearchResultActivity(String mSearchContent){
-        Intent intent = new Intent();
-        // todo: 将搜索结果传递给搜搜界面
-    }
 
     @Override
     protected int getLayoutId() {

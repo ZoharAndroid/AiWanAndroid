@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
@@ -14,24 +15,24 @@ import androidx.fragment.app.Fragment;
 
 import com.zzh.aiwanandroid.R;
 
-public class ExampleBaseActivity extends BaseActivity {
+public class ExampleBaseScrollActivity extends BaseActivity {
 
     private TextView mExampleTitle;
     private Toolbar mExampleToolbar;
     private LinearLayout mExampleSearchContainer;
     private EditText mExampleSearchEdit;
     private ImageView mExampleSearchDismiss;
-    private FrameLayout mExampleFrameLayout;
+    private NestedScrollView mExampleNestScroll;
 
     @Override
     protected void initView() {
         super.initView();
+        mExampleNestScroll = findViewById(R.id.example_content_container);
         mExampleTitle = findViewById(R.id.example_content_title);
         mExampleToolbar = findViewById(R.id.example_content_toolbar);
         mExampleSearchContainer = findViewById(R.id.search_container);
         mExampleSearchEdit = findViewById(R.id.search_edit_text);
         mExampleSearchDismiss = findViewById(R.id.search_image_dismiss);
-        mExampleFrameLayout = findViewById(R.id.example_content_container_frame);
 
         // 设置toolbar
         setSupportActionBar(mExampleToolbar);
@@ -69,16 +70,17 @@ public class ExampleBaseActivity extends BaseActivity {
         return mExampleSearchDismiss;
     }
 
+
     /**
-     * 设置FrameLayout显示状态，默认是false，不显示该布局
+     * 设置NestScrollView显示状态，默认为显示状态
      *
      * @param isShow
      */
-    protected void setExampleFrameLayoutDisplay(boolean isShow) {
+    protected void setExampleNetScrollViewDisplay(boolean isShow) {
         if (isShow) {
-            mExampleFrameLayout.setVisibility(View.VISIBLE);
+            mExampleNestScroll.setVisibility(View.VISIBLE);
         } else {
-            mExampleFrameLayout.setVisibility(View.GONE);
+            mExampleNestScroll.setVisibility(View.GONE);
         }
     }
 
@@ -124,7 +126,7 @@ public class ExampleBaseActivity extends BaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.example_activity_layout;
+        return R.layout.example_scroll_activity_layout;
     }
 
 
@@ -134,6 +136,9 @@ public class ExampleBaseActivity extends BaseActivity {
      * @param fragment
      */
     public void setContentFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().add(R.id.example_content_container_frame, fragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.example_content_container, fragment).commit();
+
+
     }
+
 }

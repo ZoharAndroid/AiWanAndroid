@@ -66,7 +66,7 @@ public class HttpConfig {
      * <p>
      * 注意：支持多个关键词，用空格隔开
      */
-    public static final String QUERY_URL(int page) {
+    public static String QUERY_URL(int page) {
         return "https://www.wanandroid.com/article/query/" + page + "/json";
     }
 }

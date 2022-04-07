@@ -33,4 +33,6 @@
     <string name="search_history">Search History</string>
     <string name="clear_all">Clear All</string>
     <string name="search_show">Hurry up search dry article!</string>
+    <string name="no_data">No data!O(∩_∩)O</string>
+    <string name="input_search">Please input search content！</string>
 </resources>

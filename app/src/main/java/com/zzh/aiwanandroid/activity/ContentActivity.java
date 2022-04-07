@@ -1,22 +1,18 @@
 package com.zzh.aiwanandroid.activity;
 
 
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 import com.zzh.aiwanandroid.Constants;
 import com.zzh.aiwanandroid.R;
-import com.zzh.aiwanandroid.base.BaseActivity;
-import com.zzh.aiwanandroid.base.ExampleBaseActivity;
-import com.zzh.aiwanandroid.bean.Article;
+import com.zzh.aiwanandroid.base.ExampleBaseScrollActivity;
 import com.zzh.aiwanandroid.fragment.ContentFragment;
-import com.zzh.aiwanandroid.fragment.OnLoadFragmentListener;
-import com.zzh.aiwanandroid.utils.LogUtils;
 
-public class ContentActivity extends ExampleBaseActivity {
+public class ContentActivity extends ExampleBaseScrollActivity {
 
     private String mArticleURL;
     private String mArticleTitle;
@@ -33,7 +29,7 @@ public class ContentActivity extends ExampleBaseActivity {
         super.initEventAndData();
         mArticleURL = getIntent().getStringExtra(Constants.intent_extra_url);
         mArticleTitle = getIntent().getStringExtra(Constants.intent_extra_title);
-        setToolbarTitle(mArticleTitle);
+        setToolbarTitle(Html.fromHtml(mArticleTitle).toString());
         setContentFragment(ContentFragment.getInstance(mArticleURL, null));
     }
 

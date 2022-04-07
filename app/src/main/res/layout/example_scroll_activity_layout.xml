@@ -6,9 +6,10 @@
 
     <include layout="@layout/normal_toolbar_layout" />
 
-    <FrameLayout
-        android:id="@+id/example_content_container_frame"
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/example_content_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

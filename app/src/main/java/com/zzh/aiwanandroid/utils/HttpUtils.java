@@ -9,11 +9,13 @@ import com.google.gson.Gson;
 import com.zzh.aiwanandroid.config.CallbackListener;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -47,9 +49,9 @@ public class HttpUtils {
         });
     }
 
-    public static void sendPostRequest(String url, String jsonContent,CallbackListener listener){
+    public static void sendSearchPostRequest(String url,String postContent, CallbackListener listener){
         OkHttpClient client = new OkHttpClient();
-        RequestBody requestBody = new FormBody.Builder().add("k",jsonContent).build();
+        RequestBody requestBody = new FormBody.Builder().add("k",postContent).build();
         Request request = new Request.Builder().url(url).post(requestBody).build();
         client.newCall(request).enqueue(new Callback() {
             @Override

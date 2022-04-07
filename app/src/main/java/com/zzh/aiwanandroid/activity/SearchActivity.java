@@ -1,25 +1,31 @@
 package com.zzh.aiwanandroid.activity;
 
+import android.content.Intent;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.zzh.aiwanandroid.Constants;
 import com.zzh.aiwanandroid.R;
-import com.zzh.aiwanandroid.base.ExampleBaseActivity;
+import com.zzh.aiwanandroid.base.ExampleBaseScrollActivity;
+import com.zzh.aiwanandroid.bean.ArticlePages;
 import com.zzh.aiwanandroid.config.CallbackListener;
 import com.zzh.aiwanandroid.config.HttpConfig;
 import com.zzh.aiwanandroid.fragment.search.SearchFragment;
 import com.zzh.aiwanandroid.utils.HttpUtils;
-import com.zzh.aiwanandroid.utils.LogUtils;
+
+import java.util.ArrayList;
 
 import okhttp3.Call;
 
-public class SearchActivity extends ExampleBaseActivity {
+public class SearchActivity extends ExampleBaseScrollActivity {
 
     private String mSearchContent;
 
@@ -50,10 +56,10 @@ public class SearchActivity extends ExampleBaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 mSearchContent = s.toString().trim();
-                if (TextUtils.isEmpty(mSearchContent)){
+                if (TextUtils.isEmpty(mSearchContent)) {
                     // 显示消除图标
                     getSearchImageView().setVisibility(View.GONE);
-                }else{
+                } else {
                     getSearchImageView().setVisibility(View.VISIBLE);
                 }
             }
@@ -62,14 +68,14 @@ public class SearchActivity extends ExampleBaseActivity {
         getSearchImageView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(mSearchContent)){
+                if (!TextUtils.isEmpty(mSearchContent)) {
                     getSearchEditText().setText("");
                 }
             }
         });
 
         // 添加内容
-        setContentFragment(SearchFragment.getInstance(null,null));
+        setContentFragment(SearchFragment.getInstance(null, null));
     }
 
     @Override
@@ -81,19 +87,13 @@ public class SearchActivity extends ExampleBaseActivity {
                 break;
             case R.id.menu_search:
                 // 搜索
-                // todo: 开启搜索界面
-                LogUtils.d(mSearchContent);
-                HttpUtils.sendPostRequest(HttpConfig.QUERY_URL(0), mSearchContent, new CallbackListener() {
-                    @Override
-                    public void onSuccess(String response) {
-                        LogUtils.d(response);
-                    }
-
-                    @Override
-                    public void onFailure(Call call) {
-
-                    }
-                });
+                if(TextUtils.isEmpty(mSearchContent)){
+                    Toast.makeText(this, getResources().getString(R.string.input_search),Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent intent = new Intent(SearchActivity.this, ResultActivity.class);
+                    intent.putExtra(Constants.intent_extra_title, mSearchContent);
+                    startActivity(intent);
+                }
                 break;
         }
         return true;

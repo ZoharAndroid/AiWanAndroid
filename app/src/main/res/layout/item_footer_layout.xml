@@ -26,5 +26,15 @@
 
     </LinearLayout>
 
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/item_footer_no_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="5dp"
+        android:text="@string/no_data"
+        android:textSize="16sp" />
+
 
 </FrameLayout>

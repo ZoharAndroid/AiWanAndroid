@@ -7,7 +7,8 @@ public class Constants {
 
     public static final String intent_extra_url = "intent_extra_url";
     public static final String intent_extra_title = "intent_extra_title";
-
+    public static final String intent_extra_articles = "intent_extra_article";
+    public static final String intent_extra_page = "intent_extra_page";
     /**
      * bottom pager fragment tags
      */
