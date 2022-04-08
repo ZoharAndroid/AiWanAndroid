@@ -80,4 +80,27 @@ public class HttpConfig {
     public static String SQUARE_URL(int page) {
         return "https://wanandroid.com/user_article/list/" + page + "/json";
     }
+
+    /**
+     * 获取公众号列表
+     * <p>
+     * https://wanandroid.com/wxarticle/chapters/json
+     * 方法： GET
+     */
+    public static String GET_WECHAT_URL = "https://wanandroid.com/wxarticle/chapters/json";
+
+    /**
+     * 查看某个公众号历史数据
+     * <p>
+     * https://wanandroid.com/wxarticle/list/408/1/json
+     * 方法：GET
+     * 参数：
+     * 公众号 ID：拼接在 url 中，eg:405
+     * 公众号页码：拼接在url 中，eg:1
+     * <p>
+     * 该接口支持传入 page_size 控制分页数量，取值为[1-40]，不传则使用默认值，一旦传入了 page_size，后续该接口分页都需要带上，否则会造成分页读取错误。
+     */
+    public static String QUERY_WECHAT_ARTICLE_URL(int userId, int currentPage) {
+        return "https://wanandroid.com/wxarticle/list/" + userId + "/" + currentPage + "/json";
+    }
 }

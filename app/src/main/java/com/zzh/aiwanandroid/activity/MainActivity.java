@@ -28,7 +28,7 @@ import com.zzh.aiwanandroid.fragment.home.HomeFragment;
 import com.zzh.aiwanandroid.fragment.ProjectFragment;
 import com.zzh.aiwanandroid.fragment.square.SquareFragment;
 import com.zzh.aiwanandroid.fragment.SystemFragment;
-import com.zzh.aiwanandroid.fragment.WechatFragment;
+import com.zzh.aiwanandroid.fragment.wechat.WechatFragment;
 import com.zzh.aiwanandroid.utils.CommonUtils;
 
 import java.util.ArrayList;
