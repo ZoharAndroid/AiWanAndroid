@@ -25,6 +25,10 @@ import java.util.ArrayList;
 
 import okhttp3.Call;
 
+/**
+ * 搜索界面
+ *
+ */
 public class SearchActivity extends ExampleBaseScrollActivity {
 
     private String mSearchContent;

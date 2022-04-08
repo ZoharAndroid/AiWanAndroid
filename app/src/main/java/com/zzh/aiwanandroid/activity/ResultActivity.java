@@ -16,6 +16,10 @@ import com.zzh.aiwanandroid.fragment.search.ResultFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 搜索结果界面
+ *
+ */
 public class ResultActivity extends ExampleBaseActivity {
 
     private String mSearchContent;

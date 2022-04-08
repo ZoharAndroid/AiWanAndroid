@@ -69,4 +69,15 @@ public class HttpConfig {
     public static String QUERY_URL(int page) {
         return "https://www.wanandroid.com/article/query/" + page + "/json";
     }
+
+    /**
+     * 广场列表数据
+     * <p>
+     * https://wanandroid.com/user_article/list/页码/json
+     * GET请求
+     * 页码拼接在url上从0开始
+     */
+    public static String SQUARE_URL(int page) {
+        return "https://wanandroid.com/user_article/list/" + page + "/json";
+    }
 }

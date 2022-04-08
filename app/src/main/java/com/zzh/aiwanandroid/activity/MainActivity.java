@@ -13,11 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.FrameMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -28,7 +26,7 @@ import com.zzh.aiwanandroid.Constants;
 import com.zzh.aiwanandroid.R;
 import com.zzh.aiwanandroid.fragment.home.HomeFragment;
 import com.zzh.aiwanandroid.fragment.ProjectFragment;
-import com.zzh.aiwanandroid.fragment.QuestionFragment;
+import com.zzh.aiwanandroid.fragment.square.SquareFragment;
 import com.zzh.aiwanandroid.fragment.SystemFragment;
 import com.zzh.aiwanandroid.fragment.WechatFragment;
 import com.zzh.aiwanandroid.utils.CommonUtils;
@@ -182,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initFragments() {
-        Fragment mQuestionFragment = QuestionFragment.getInstance(null, null);
+        Fragment mQuestionFragment = SquareFragment.getInstance(null, null);
         Fragment mWechatFragment = WechatFragment.getInstance(null, null);
         Fragment mSystemFragment = SystemFragment.getInstance(null, null);
         Fragment mProjectFragment = ProjectFragment.getInstance(null, null);

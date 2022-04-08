@@ -1,11 +1,9 @@
-package com.zzh.aiwanandroid.fragment.search;
+package com.zzh.aiwanandroid.fragment.square;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,12 +11,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.zzh.aiwanandroid.Constants;
 import com.zzh.aiwanandroid.R;
-import com.zzh.aiwanandroid.activity.ResultActivity;
 import com.zzh.aiwanandroid.base.BaseFragment;
 import com.zzh.aiwanandroid.bean.Article;
 import com.zzh.aiwanandroid.bean.ArticlePages;
 import com.zzh.aiwanandroid.config.CallbackListener;
 import com.zzh.aiwanandroid.config.HttpConfig;
+import com.zzh.aiwanandroid.fragment.search.ResultAdapter;
 import com.zzh.aiwanandroid.utils.HttpUtils;
 import com.zzh.aiwanandroid.widget.onLoadMoreListener;
 
@@ -27,36 +25,27 @@ import java.util.List;
 
 import okhttp3.Call;
 
+/**
+ * 广场
+ */
+public class SquareFragment extends BaseFragment {
 
-public class ResultFragment extends BaseFragment {
-
-    private static boolean isLoadOver;
-    private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeView;
+    private RecyclerView mRecyclerView;
     private List<Article> mArticle = new ArrayList<>();
-    private ResultAdapter mAdapter;
     private int currentPage = 0;
     private int pageCount = 0;
-    private String mSearchContent; // 搜索内容
+    private ResultAdapter mAdapter;
     private LinearLayout mNoDataView;
-
-    private ResultFragment() {
-    }
+    private static boolean isLoadOver;
 
     public static Fragment getInstance(String param1, String param2) {
-        ResultFragment fragment = new ResultFragment();
-        Bundle args = new Bundle();
-        args.putString(Constants.param1, param1);
-        args.putString(Constants.param2, param2);
-        fragment.setArguments(args);
+        SquareFragment fragment = new SquareFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants.param1, param1);
+        bundle.putString(Constants.param2, param2);
+        fragment.setArguments(bundle);
         return fragment;
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        assert getArguments() != null;
-        mSearchContent = getArguments().getString(Constants.param1);
     }
 
     @Override
@@ -69,20 +58,19 @@ public class ResultFragment extends BaseFragment {
 
     @Override
     protected void initEventAndData() {
-        mArticle.addAll(((ResultActivity) getActivity()).getArticles());
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
         mAdapter = new ResultAdapter(mArticle);
         mRecyclerView.setAdapter(mAdapter);
 
-        loadMoreActivity(currentPage);
+        loadMoreArticle(currentPage);
 
         mRecyclerView.addOnScrollListener(new onLoadMoreListener() {
             @Override
             protected void onLoading(int countItem, int lastItem) {
                 if (currentPage + 1 <= pageCount) {
-                    loadMoreActivity(++currentPage);
+                    loadMoreArticle(++currentPage);
                 }
             }
         });
@@ -93,7 +81,7 @@ public class ResultFragment extends BaseFragment {
                 mSwipeView.setRefreshing(true);
                 mArticle.clear();
                 currentPage = 0;
-                loadMoreActivity(currentPage);
+                loadMoreArticle(currentPage);
 
             }
         });
@@ -105,13 +93,12 @@ public class ResultFragment extends BaseFragment {
     }
 
     /**
-     * 加载更多数据
+     * 加载数据
      *
      * @param page
      */
-    private void loadMoreActivity(int page) {
-        // 重新发送请求
-        HttpUtils.sendSearchPostRequest(HttpConfig.QUERY_URL(page), mSearchContent, new CallbackListener() {
+    private void loadMoreArticle(int page) {
+        HttpUtils.sendHttpRequest(HttpConfig.SQUARE_URL(page), new CallbackListener() {
             @Override
             public void onSuccess(String response) {
                 ArticlePages articlePages = HttpUtils.parseJson(response, ArticlePages.class);
