@@ -78,25 +78,32 @@ public class WechatFragment extends LazyBaseFragment {
 
 
     private void initViewPagerAndTabLayout(List<WeChatBean.WeChat> wxAuthors) {
-        mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-            @NonNull
-            @Override
-            public Fragment getItem(int position) {
-                WxAuthorDetailFragment fragment = (WxAuthorDetailFragment) mFragments.get(position);
-                return fragment;
-            }
-
-            @Override
-            public int getCount() {
-                return mFragments == null ? 0 : mFragments.size();
-            }
-
+        mViewPager.setAdapter(new FragmentViewPager(getChildFragmentManager(),mFragments){
             @Nullable
             @Override
             public CharSequence getPageTitle(int position) {
                 return wxAuthors.get(position).getName();
             }
         });
+//        mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+//            @NonNull
+//            @Override
+//            public Fragment getItem(int position) {
+//                WxAuthorDetailFragment fragment = (WxAuthorDetailFragment) mFragments.get(position);
+//                return fragment;
+//            }
+//
+//            @Override
+//            public int getCount() {
+//                return mFragments == null ? 0 : mFragments.size();
+//            }
+//
+//            @Nullable
+//            @Override
+//            public CharSequence getPageTitle(int position) {
+//                return wxAuthors.get(position).getName();
+//            }
+//        });
         mTabView.setupWithViewPager(mViewPager);
     }
 
@@ -118,7 +125,7 @@ public class WechatFragment extends LazyBaseFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mFragments.clear();
+                       mFragments.clear();
                         for (WeChatBean.WeChat chat : weChatList) {
                             mFragments.add(WxAuthorDetailFragment.getInstance(chat.getId(), chat.getName()));
                             mTabView.addTab(mTabView.newTab().setText(chat.getName()));
@@ -136,18 +143,5 @@ public class WechatFragment extends LazyBaseFragment {
         });
     }
 
-    private void loadWechatArticle(int userId, int currentPage) {
-        HttpUtils.sendHttpRequest(HttpConfig.QUERY_WECHAT_ARTICLE_URL(userId, currentPage), new CallbackListener() {
-            @Override
-            public void onSuccess(String response) {
-
-            }
-
-            @Override
-            public void onFailure(Call call) {
-
-            }
-        });
-    }
 
 }
