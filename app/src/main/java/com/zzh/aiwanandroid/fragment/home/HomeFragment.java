@@ -79,6 +79,7 @@ public class HomeFragment extends BaseFragment {
         mRefreshLayout = view.findViewById(R.id.swipe_refresh);
     }
 
+
     @Override
     protected void initEventAndData() {
         articleList = new ArrayList<>();

@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.lifecycle.Lifecycle;
+import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
@@ -18,6 +20,7 @@ import com.google.android.material.tabs.TabLayout;
 import com.zzh.aiwanandroid.Constants;
 import com.zzh.aiwanandroid.R;
 import com.zzh.aiwanandroid.base.BaseFragment;
+import com.zzh.aiwanandroid.base.LazyBaseFragment;
 import com.zzh.aiwanandroid.bean.WeChatBean;
 import com.zzh.aiwanandroid.config.CallbackListener;
 import com.zzh.aiwanandroid.config.HttpConfig;
@@ -30,7 +33,7 @@ import java.util.List;
 
 import okhttp3.Call;
 
-public class WechatFragment extends BaseFragment {
+public class WechatFragment extends LazyBaseFragment {
 
     private TabLayout mTabView;
     private CustomDialog dialog;
@@ -57,22 +60,30 @@ public class WechatFragment extends BaseFragment {
     }
 
     @Override
-    protected void initEventAndData() {
+    protected void onVisible() {
+        LogUtils.d("onVisible");
+    }
 
+    @Override
+    protected void onInVisible() {
+        LogUtils.d("onInVisible");
+    }
+
+    @Override
+    protected void initEventAndData() {
         dialog.show();
         // 加载微信公众号账号
         loadWechatAuthor();
-
-
     }
 
 
     private void initViewPagerAndTabLayout(List<WeChatBean.WeChat> wxAuthors) {
-        mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
+        mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             @NonNull
             @Override
             public Fragment getItem(int position) {
-                return mFragments.get(position);
+                WxAuthorDetailFragment fragment = (WxAuthorDetailFragment) mFragments.get(position);
+                return fragment;
             }
 
             @Override
@@ -107,7 +118,6 @@ public class WechatFragment extends BaseFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
                         mFragments.clear();
                         for (WeChatBean.WeChat chat : weChatList) {
                             mFragments.add(WxAuthorDetailFragment.getInstance(chat.getId(), chat.getName()));

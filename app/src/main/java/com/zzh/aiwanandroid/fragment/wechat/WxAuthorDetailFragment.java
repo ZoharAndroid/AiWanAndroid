@@ -23,6 +23,7 @@ public class WxAuthorDetailFragment extends BaseFragment {
         return fragment;
     }
 
+
     @Override
     protected void initEventAndData() {
         mWxAuthorId = getArguments().getInt(Constants.param1);

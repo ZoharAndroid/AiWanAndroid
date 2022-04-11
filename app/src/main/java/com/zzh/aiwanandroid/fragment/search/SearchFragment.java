@@ -68,6 +68,7 @@ public class SearchFragment extends BaseFragment {
 
     }
 
+
     @Override
     protected void initEventAndData() {
         mHotKeyList = new ArrayList<>();

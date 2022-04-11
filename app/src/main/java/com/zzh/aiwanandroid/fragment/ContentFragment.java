@@ -44,6 +44,7 @@ public class ContentFragment extends BaseFragment {
         mProgressBar = view.findViewById(R.id.content_loading_progressbar);
     }
 
+
     @SuppressLint({"JavascriptInterface", "SetJavaScriptEnabled"})
     @Override
     protected void initEventAndData() {

@@ -5,14 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.zzh.aiwanandroid.utils.LogUtils;
-
-public abstract class BaseFragment extends Fragment {
+public abstract class LazyBaseFragment extends Fragment {
 
     /**
      * 是否第一次加载页面
@@ -29,7 +26,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
 
-
     @Override
     public void onResume() {
         super.onResume();
@@ -37,8 +33,25 @@ public abstract class BaseFragment extends Fragment {
             isFirstLoad = false;
             initEventAndData();
         }
+        onVisible();
 
     }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        onInVisible();
+    }
+
+    /**
+     * fragment 显示在前台时调用
+     */
+    protected abstract void onVisible();
+
+    /**
+     * fragment 隐藏时调用
+     */
+    protected abstract void onInVisible();
 
     @Override
     public void onDestroyView() {

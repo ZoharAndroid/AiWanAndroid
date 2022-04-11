@@ -67,6 +67,7 @@ public class ResultFragment extends BaseFragment {
         mNoDataView = view.findViewById(R.id.no_data_container);
     }
 
+
     @Override
     protected void initEventAndData() {
         mArticle.addAll(((ResultActivity) getActivity()).getArticles());
