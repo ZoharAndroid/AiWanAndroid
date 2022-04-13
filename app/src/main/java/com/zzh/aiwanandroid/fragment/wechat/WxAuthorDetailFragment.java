@@ -4,20 +4,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.zzh.aiwanandroid.Constants;
 import com.zzh.aiwanandroid.R;
-import com.zzh.aiwanandroid.activity.ResultActivity;
 import com.zzh.aiwanandroid.base.BaseFragment;
+import com.zzh.aiwanandroid.base.LazyBaseFragment;
 import com.zzh.aiwanandroid.bean.Article;
 import com.zzh.aiwanandroid.bean.ArticlePages;
 import com.zzh.aiwanandroid.config.CallbackListener;
 import com.zzh.aiwanandroid.config.HttpConfig;
-import com.zzh.aiwanandroid.fragment.search.ResultAdapter;
 import com.zzh.aiwanandroid.utils.HttpUtils;
 import com.zzh.aiwanandroid.utils.LogUtils;
 import com.zzh.aiwanandroid.widget.CustomDialog;
@@ -28,7 +26,10 @@ import java.util.List;
 
 import okhttp3.Call;
 
-public class WxAuthorDetailFragment extends BaseFragment {
+public class WxAuthorDetailFragment extends LazyBaseFragment {
+
+    //
+    // 判断是否加载过，如果加载过说明
 
     private int mWxAuthorId; //wx id
     private String mWxAuthorName; // wx name
@@ -63,6 +64,17 @@ public class WxAuthorDetailFragment extends BaseFragment {
         mNoDataView = view.findViewById(R.id.no_data_container);
     }
 
+
+    @Override
+    protected void onVisible() {
+
+    }
+
+    @Override
+    protected void onInVisible() {
+
+    }
+
     @Override
     protected void initEventAndData() {
         mWxAuthorId = getArguments().getInt(Constants.param1);
@@ -74,8 +86,6 @@ public class WxAuthorDetailFragment extends BaseFragment {
         mAdapter = new WxAuthorDetailAdapter(mArticle);
         mRecyclerView.setAdapter(mAdapter);
 
-        customDialog = new CustomDialog(getContext());
-        loadWechatArticle(mWxAuthorId, currentPage);
 
         mRecyclerView.addOnScrollListener(new onLoadMoreListener() {
             @Override
@@ -96,6 +106,17 @@ public class WxAuthorDetailFragment extends BaseFragment {
 
             }
         });
+
+
+    }
+
+    @Override
+    protected void startLoadData() {
+        super.startLoadData();
+        // 如果可见
+        // 每次都要加载
+        customDialog = new CustomDialog(getContext());
+        loadWechatArticle(mWxAuthorId, currentPage);
     }
 
     @Override
@@ -132,7 +153,9 @@ public class WxAuthorDetailFragment extends BaseFragment {
                             mAdapter.notifyDataSetChanged();
                         }
 
-                        customDialog.dismiss();
+                        if (customDialog != null) {
+                            customDialog.dismiss();
+                        }
                     }
                 });
             }
@@ -144,6 +167,11 @@ public class WxAuthorDetailFragment extends BaseFragment {
         });
     }
 
+    /**
+     * 是否加载完毕状态
+     *
+     * @return
+     */
     public static boolean getLoadIsOver() {
         return isLoadOver;
     }

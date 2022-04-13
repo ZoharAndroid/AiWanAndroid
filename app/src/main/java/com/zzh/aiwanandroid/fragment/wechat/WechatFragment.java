@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -39,7 +41,7 @@ public class WechatFragment extends LazyBaseFragment {
     private CustomDialog dialog;
     private ViewPager mViewPager;
 
-    private List<BaseFragment> mFragments = new ArrayList<>();
+    private List<WxAuthorDetailFragment> mFragments = new ArrayList<>();
 
 
     public static WechatFragment getInstance(String param1, String param2) {
@@ -78,14 +80,35 @@ public class WechatFragment extends LazyBaseFragment {
 
 
     private void initViewPagerAndTabLayout(List<WeChatBean.WeChat> wxAuthors) {
-        mViewPager.setAdapter(new FragmentViewPager(getChildFragmentManager(),mFragments){
+//        mViewPager.setAdapter(new FragmentViewPager(getChildFragmentManager(),mFragments){
+//            @Nullable
+//            @Override
+//            public CharSequence getPageTitle(int position) {
+//                return wxAuthors.get(position).getName();
+//            }
+//        });
+
+        mViewPager.setAdapter(new FragmentPagerAdapter(getActivity().getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+            @NonNull
+            @Override
+            public Fragment getItem(int position) {
+               // FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
+                return mFragments.get(position);
+            }
+
+            @Override
+            public int getCount() {
+                return mFragments == null ? 0 : mFragments.size();
+            }
+
             @Nullable
             @Override
             public CharSequence getPageTitle(int position) {
                 return wxAuthors.get(position).getName();
             }
         });
-//        mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager(), FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+//        mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
 //            @NonNull
 //            @Override
 //            public Fragment getItem(int position) {
@@ -104,6 +127,7 @@ public class WechatFragment extends LazyBaseFragment {
 //                return wxAuthors.get(position).getName();
 //            }
 //        });
+
         mTabView.setupWithViewPager(mViewPager);
     }
 
@@ -114,7 +138,7 @@ public class WechatFragment extends LazyBaseFragment {
     }
 
     /**
-     * 加载公众号
+     * 加载公众号账号
      */
     private void loadWechatAuthor() {
         HttpUtils.sendHttpRequest(HttpConfig.GET_WECHAT_URL, new CallbackListener() {
@@ -125,13 +149,15 @@ public class WechatFragment extends LazyBaseFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                       mFragments.clear();
+                        mFragments.clear();
                         for (WeChatBean.WeChat chat : weChatList) {
                             mFragments.add(WxAuthorDetailFragment.getInstance(chat.getId(), chat.getName()));
                             mTabView.addTab(mTabView.newTab().setText(chat.getName()));
                         }
                         initViewPagerAndTabLayout(weChatList);
-                        dialog.dismiss();
+                        if (dialog != null) {
+                            dialog.dismiss();
+                        }
                     }
                 });
             }

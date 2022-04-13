@@ -11,36 +11,63 @@ import androidx.fragment.app.Fragment;
 
 public abstract class LazyBaseFragment extends Fragment {
 
+    protected View rootView;
+
     /**
-     * 是否第一次加载页面
+     * 是否第一场开启网络加载
      */
-    private boolean isFirstLoad = true;
+    private boolean isFirstLoad;
+
+    private boolean beforeVisibleState = false;
+
+    /**
+     * 当前Fragment是否处于可见状态标志
+     */
+    private boolean isFragmentVisible;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(getLayoutId(), container, false);
-        initView(view);
-        return view;
+        rootView = inflater.inflate(getLayoutId(), container, false);
+        initView(rootView);
+        isFirstLoad = true;
+        return rootView;
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
-        if (isFirstLoad) {
-            isFirstLoad = false;
-            initEventAndData();
+        initEventAndData();
+        if (!beforeVisibleState && isResumed()){
+            dispatchHintState(true);
         }
-        onVisible();
-
+        beforeVisibleState = true;
     }
+
+    private void dispatchHintState(boolean state){
+        if (beforeVisibleState == state){
+            return;
+        }
+        beforeVisibleState = state;
+        if(state){
+            startLoadData();
+        }else{
+            stopLoadData();
+        }
+    }
+
+    protected void startLoadData(){};
+    protected void stopLoadData(){};
 
     @Override
     public void onPause() {
         super.onPause();
-        onInVisible();
+        if(beforeVisibleState && !isResumed()){
+            dispatchHintState(false);
+        }
+        beforeVisibleState = false;
     }
 
     /**
@@ -52,12 +79,6 @@ public abstract class LazyBaseFragment extends Fragment {
      * fragment 隐藏时调用
      */
     protected abstract void onInVisible();
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        isFirstLoad = true;
-    }
 
 
     protected abstract void initEventAndData();
