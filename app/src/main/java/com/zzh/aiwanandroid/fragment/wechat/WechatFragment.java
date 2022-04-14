@@ -63,7 +63,6 @@ public class WechatFragment extends BaseFragment {
     }
 
 
-
     @Override
     protected void initEventAndData() {
         dialog.show();
@@ -73,31 +72,85 @@ public class WechatFragment extends BaseFragment {
 
 
     private void initViewPagerAndTabLayout(List<WeChatBean.WeChat> wxAuthors) {
-        WxPagerAdapter adapter = new WxPagerAdapter(getChildFragmentManager(),getLifecycle(),mFragments);
+
+        for (WeChatBean.WeChat chat : wxAuthors) {
+            mFragments.add(WxAuthorDetailFragment.getInstance(chat.getId(), chat.getName()));
+            //mTabView.addTab(mTabView.newTab().setText(chat.getName()));
+        }
+
+        WxPagerAdapter adapter = new WxPagerAdapter(getChildFragmentManager(), getLifecycle(), mFragments);
         mViewPager.setAdapter(adapter);
+
+
         new TabLayoutMediator(mTabView, mViewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
                 tab.setText(wxAuthors.get(position).getName());
             }
         }).attach();
-        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            }
 
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-            }
 
-            @Override
-            public void onPageScrollStateChanged(int state) {
-                super.onPageScrollStateChanged(state);
-            }
-        });
+//        mTabView.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//
+//            int lastPosition = 0;
+//            int beforePosition = 0;
+//
+//            @Override
+//            public void onTabSelected(TabLayout.Tab tab) {
+//                lastPosition = tab.getPosition();
+//                LogUtils.d("onTabSelected:" + tab.getPosition());
+//                switchFragment(beforePosition, lastPosition, lastPosition + "");
+//            }
+//
+//            @Override
+//            public void onTabUnselected(TabLayout.Tab tab) {
+//                beforePosition = tab.getPosition();
+//                LogUtils.d("onTabUnselected:" + tab.getPosition());
+//            }
+//
+//            @Override
+//            public void onTabReselected(TabLayout.Tab tab) {
+//                LogUtils.d("onTabReselected:" + tab.getPosition());
+//            }
+//        });
+//
+//
+//        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+//
+//            int beforePosition = 0;
+//
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+//                LogUtils.d("onPageScrolled:" + position + " " + positionOffset + " " + positionOffsetPixels);
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                super.onPageSelected(position);
+//                LogUtils.d("onPageSelected:" + position);
+//                switchFragment(beforePosition, position, position + "");
+//                beforePosition = position;
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//                super.onPageScrollStateChanged(state);
+//            }
+//        });
     }
+
+//    private void switchFragment(int beforePosition, int lastPosition, String tag) {
+//        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+//        WxAuthorDetailFragment beforeFragment = mFragments.get(beforePosition);
+//        WxAuthorDetailFragment targetFragment = mFragments.get(lastPosition);//需要切换的Fragment
+//        ft.hide(beforeFragment);
+//        if (!targetFragment.isAdded() && null == getChildFragmentManager().findFragmentByTag(tag)) {
+//            ft.add(targetFragment, tag);
+//        }
+//        ft.show(targetFragment);
+//        ft.commit();
+//    }
 
 
     @Override
@@ -117,11 +170,6 @@ public class WechatFragment extends BaseFragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mFragments.clear();
-                        for (WeChatBean.WeChat chat : weChatList) {
-                            mFragments.add(WxAuthorDetailFragment.getInstance(chat.getId(), chat.getName()));
-                            mTabView.addTab(mTabView.newTab().setText(chat.getName()));
-                        }
                         initViewPagerAndTabLayout(weChatList);
                         if (dialog != null) {
                             dialog.dismiss();

@@ -34,7 +34,20 @@
                     android:text="@string/tool_bar_title"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tool_bar_tab_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    app:tabMode="scrollable"
+                    app:tabIndicatorColor="@color/white"
+                    app:tabIndicatorFullWidth="false"
+
+                    app:tabTextAppearance="@style/tab_layout_text_attr" />
             </androidx.appcompat.widget.Toolbar>
+
         </com.google.android.material.appbar.AppBarLayout>
 
 
