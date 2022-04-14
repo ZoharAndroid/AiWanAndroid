@@ -58,7 +58,7 @@ public class StructureFragment extends BaseFragment {
         mFragments.add(SystemFragment.getInstance(null, null));
         mFragments.add(NavigationFragment.getInstance(null, null));
 
-        mViewPager.setAdapter(new FragmentStateAdapter(getActivity()) {
+        mViewPager.setAdapter(new FragmentStateAdapter(getChildFragmentManager(),getLifecycle()) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
