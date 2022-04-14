@@ -19,6 +19,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.zzh.aiwanandroid.Constants;
 import com.zzh.aiwanandroid.R;
 import com.zzh.aiwanandroid.base.BaseFragment;
@@ -35,11 +36,11 @@ import java.util.List;
 
 import okhttp3.Call;
 
-public class WechatFragment extends LazyBaseFragment {
+public class WechatFragment extends BaseFragment {
 
     private TabLayout mTabView;
     private CustomDialog dialog;
-    private ViewPager mViewPager;
+    private ViewPager2 mViewPager;
 
     private List<WxAuthorDetailFragment> mFragments = new ArrayList<>();
 
@@ -61,15 +62,7 @@ public class WechatFragment extends LazyBaseFragment {
         mViewPager = view.findViewById(R.id.view_pager);
     }
 
-    @Override
-    protected void onVisible() {
-        LogUtils.d("onVisible");
-    }
 
-    @Override
-    protected void onInVisible() {
-        LogUtils.d("onInVisible");
-    }
 
     @Override
     protected void initEventAndData() {
@@ -80,55 +73,30 @@ public class WechatFragment extends LazyBaseFragment {
 
 
     private void initViewPagerAndTabLayout(List<WeChatBean.WeChat> wxAuthors) {
-//        mViewPager.setAdapter(new FragmentViewPager(getChildFragmentManager(),mFragments){
-//            @Nullable
-//            @Override
-//            public CharSequence getPageTitle(int position) {
-//                return wxAuthors.get(position).getName();
-//            }
-//        });
-
-        mViewPager.setAdapter(new FragmentPagerAdapter(getActivity().getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-            @NonNull
+        WxPagerAdapter adapter = new WxPagerAdapter(getChildFragmentManager(),getLifecycle(),mFragments);
+        mViewPager.setAdapter(adapter);
+        new TabLayoutMediator(mTabView, mViewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
-            public Fragment getItem(int position) {
-               // FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
-                return mFragments.get(position);
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                tab.setText(wxAuthors.get(position).getName());
+            }
+        }).attach();
+        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
 
             @Override
-            public int getCount() {
-                return mFragments == null ? 0 : mFragments.size();
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
             }
 
-            @Nullable
             @Override
-            public CharSequence getPageTitle(int position) {
-                return wxAuthors.get(position).getName();
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
             }
         });
-
-//        mViewPager.setAdapter(new FragmentStatePagerAdapter(getChildFragmentManager()) {
-//            @NonNull
-//            @Override
-//            public Fragment getItem(int position) {
-//                WxAuthorDetailFragment fragment = (WxAuthorDetailFragment) mFragments.get(position);
-//                return fragment;
-//            }
-//
-//            @Override
-//            public int getCount() {
-//                return mFragments == null ? 0 : mFragments.size();
-//            }
-//
-//            @Nullable
-//            @Override
-//            public CharSequence getPageTitle(int position) {
-//                return wxAuthors.get(position).getName();
-//            }
-//        });
-
-        mTabView.setupWithViewPager(mViewPager);
     }
 
 
@@ -168,6 +136,5 @@ public class WechatFragment extends LazyBaseFragment {
             }
         });
     }
-
 
 }

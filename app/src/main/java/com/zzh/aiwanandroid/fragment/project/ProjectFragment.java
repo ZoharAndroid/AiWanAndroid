@@ -1,4 +1,4 @@
-package com.zzh.aiwanandroid.fragment;
+package com.zzh.aiwanandroid.fragment.project;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

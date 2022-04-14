@@ -103,4 +103,13 @@ public class HttpConfig {
     public static String QUERY_WECHAT_ARTICLE_URL(int userId, int currentPage) {
         return "https://wanandroid.com/wxarticle/list/" + userId + "/" + currentPage + "/json";
     }
+
+    /**
+     * 体系数据
+     * https://www.wanandroid.com/tree/json
+     *
+     * 方法：GET
+     * 参数：无
+     */
+    public static String STRUCTURE_URL = "https://www.wanandroid.com/tree/json";
 }

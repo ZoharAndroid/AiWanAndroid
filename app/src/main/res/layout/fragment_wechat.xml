@@ -16,7 +16,7 @@
         app:tabTextAppearance="@style/tab_layout_text_attr"
         app:tabTextColor="@color/tab_text_color" />
 
-    <androidx.viewpager.widget.ViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

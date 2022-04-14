@@ -26,7 +26,7 @@ import java.util.List;
 
 import okhttp3.Call;
 
-public class WxAuthorDetailFragment extends LazyBaseFragment {
+public class WxAuthorDetailFragment extends BaseFragment {
 
     //
     // 判断是否加载过，如果加载过说明
@@ -41,6 +41,7 @@ public class WxAuthorDetailFragment extends LazyBaseFragment {
     private WxAuthorDetailAdapter mAdapter;
     private int currentPage = 0;
     private int pageCount = 0;
+    private List<Article> articles;
 
     private CustomDialog customDialog;
 
@@ -65,15 +66,6 @@ public class WxAuthorDetailFragment extends LazyBaseFragment {
     }
 
 
-    @Override
-    protected void onVisible() {
-
-    }
-
-    @Override
-    protected void onInVisible() {
-
-    }
 
     @Override
     protected void initEventAndData() {
@@ -107,17 +99,11 @@ public class WxAuthorDetailFragment extends LazyBaseFragment {
             }
         });
 
-
-    }
-
-    @Override
-    protected void startLoadData() {
-        super.startLoadData();
-        // 如果可见
-        // 每次都要加载
         customDialog = new CustomDialog(getContext());
         loadWechatArticle(mWxAuthorId, currentPage);
     }
+
+
 
     @Override
     protected int getLayoutId() {
@@ -132,7 +118,7 @@ public class WxAuthorDetailFragment extends LazyBaseFragment {
      * @param currentPage
      */
     private void loadWechatArticle(int userId, int currentPage) {
-        customDialog.show();
+       // customDialog.show();
         HttpUtils.sendHttpRequest(HttpConfig.QUERY_WECHAT_ARTICLE_URL(userId, currentPage), new CallbackListener() {
             @Override
             public void onSuccess(String response) {
@@ -153,9 +139,9 @@ public class WxAuthorDetailFragment extends LazyBaseFragment {
                             mAdapter.notifyDataSetChanged();
                         }
 
-                        if (customDialog != null) {
-                            customDialog.dismiss();
-                        }
+//                        if (customDialog != null) {
+//                            customDialog.dismiss();
+//                        }
                     }
                 });
             }

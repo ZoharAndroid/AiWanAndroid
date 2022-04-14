@@ -25,9 +25,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.zzh.aiwanandroid.Constants;
 import com.zzh.aiwanandroid.R;
 import com.zzh.aiwanandroid.fragment.home.HomeFragment;
-import com.zzh.aiwanandroid.fragment.ProjectFragment;
+import com.zzh.aiwanandroid.fragment.project.ProjectFragment;
 import com.zzh.aiwanandroid.fragment.square.SquareFragment;
-import com.zzh.aiwanandroid.fragment.SystemFragment;
+import com.zzh.aiwanandroid.fragment.structure.SystemFragment;
 import com.zzh.aiwanandroid.fragment.wechat.WechatFragment;
 import com.zzh.aiwanandroid.utils.CommonUtils;
 

@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.zzh.aiwanandroid.utils.LogUtils;
+
 public abstract class LazyBaseFragment extends Fragment {
 
     protected View rootView;
@@ -16,14 +18,11 @@ public abstract class LazyBaseFragment extends Fragment {
     /**
      * 是否第一场开启网络加载
      */
-    private boolean isFirstLoad;
+    private boolean isFirstLoad = true;
 
-    private boolean beforeVisibleState = false;
+    protected abstract void onVisible();
 
-    /**
-     * 当前Fragment是否处于可见状态标志
-     */
-    private boolean isFragmentVisible;
+    protected abstract void onInVisible();
 
 
     @Nullable
@@ -31,7 +30,6 @@ public abstract class LazyBaseFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(getLayoutId(), container, false);
         initView(rootView);
-        isFirstLoad = true;
         return rootView;
     }
 
@@ -39,46 +37,19 @@ public abstract class LazyBaseFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        initEventAndData();
-        if (!beforeVisibleState && isResumed()){
-            dispatchHintState(true);
-        }
-        beforeVisibleState = true;
-    }
-
-    private void dispatchHintState(boolean state){
-        if (beforeVisibleState == state){
-            return;
-        }
-        beforeVisibleState = state;
-        if(state){
-            startLoadData();
+        if (isFirstLoad) {
+            initEventAndData();
+            isFirstLoad = false;
         }else{
-            stopLoadData();
-        }
-    }
+        onVisible();
+    }}
 
-    protected void startLoadData(){};
-    protected void stopLoadData(){};
 
     @Override
     public void onPause() {
         super.onPause();
-        if(beforeVisibleState && !isResumed()){
-            dispatchHintState(false);
-        }
-        beforeVisibleState = false;
+        onInVisible();
     }
-
-    /**
-     * fragment 显示在前台时调用
-     */
-    protected abstract void onVisible();
-
-    /**
-     * fragment 隐藏时调用
-     */
-    protected abstract void onInVisible();
 
 
     protected abstract void initEventAndData();
