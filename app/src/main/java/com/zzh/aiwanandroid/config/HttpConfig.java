@@ -128,4 +128,16 @@ public class HttpConfig {
     public static String Tree_Article_URL(int page, int cid) {
         return "https://www.wanandroid.com/article/list/" + page + "/json?cid=" + cid;
     }
+
+    /**
+     * https://www.wanandroid.com/navi/json
+     *
+     * 方法：GET
+     * 参数：无
+     *
+     * @return
+     */
+    public static String NAVIGATION_URL(){
+        return "https://www.wanandroid.com/navi/json";
+    }
 }

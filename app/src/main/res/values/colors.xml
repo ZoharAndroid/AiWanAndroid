@@ -29,4 +29,6 @@
     <color name="text_color_5">#273746</color>
     <color name="text_color_6">#2874A6</color>
     <color name="tab_text_color">#B3B6B7</color>
+
+    <color name="background_gray">#EDEDED</color>
 </resources>
