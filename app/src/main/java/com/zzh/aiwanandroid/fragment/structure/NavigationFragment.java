@@ -3,6 +3,7 @@ package com.zzh.aiwanandroid.fragment.structure;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,6 +31,7 @@ public class NavigationFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
 
     private List<NavigationBean.Navigation> mNavigations;
+    private LinearLayoutManager manager;
 
     private NavigationFragment() {
     }
@@ -50,7 +52,7 @@ public class NavigationFragment extends BaseFragment {
         mVerticalTabView = view.findViewById(R.id.vertical_tab_layout_navigation);
         mRecyclerView = view.findViewById(R.id.recycler_view_navigation);
 
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
 
@@ -84,21 +86,47 @@ public class NavigationFragment extends BaseFragment {
                                     .build()));
                         }
 
-                        NavigationRecyclerAdapter adapter = new NavigationRecyclerAdapter(getActivity(),mNavigations);
+                        NavigationRecyclerAdapter adapter = new NavigationRecyclerAdapter(getActivity(), mNavigations);
 
                         // 设置滚动内容
                         mRecyclerView.setAdapter(adapter);
 
                         // 关联TayLayout和滚动内容
                         mVerticalTabView.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
+
+
                             @Override
                             public void onTabSelected(TabView tab, int position) {
-                                    LogUtils.d("onTabSelected" + position);
+                                // 滑动到对应位置
+                                mRecyclerView.smoothScrollToPosition(position);
+                                // LogUtils.d(manager.findFirstVisibleItemPosition() + "--" + manager.findLastVisibleItemPosition() + "--"+ position + manager.findFirstCompletelyVisibleItemPosition() + "--"+ manager.findLastCompletelyVisibleItemPosition());
                             }
 
                             @Override
                             public void onTabReselected(TabView tab, int position) {
-                                LogUtils.d("onTabReselected" + position);
+
+                            }
+                        });
+
+
+                        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+                            boolean isUp = false;
+
+                            @Override
+                            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                                super.onScrollStateChanged(recyclerView, newState);
+
+                                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                                    mVerticalTabView.setTabSelected(manager.findLastVisibleItemPosition());
+
+                                }
+                            }
+
+                            @Override
+                            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                                super.onScrolled(recyclerView, dx, dy);
+
                             }
                         });
                     }
