@@ -1,5 +1,7 @@
 package com.zzh.aiwanandroid.fragment.structure;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 
@@ -23,7 +25,7 @@ import okhttp3.Call;
 
 public class SystemFragment extends BaseFragment {
 
-    private SwipeRefreshLayout mRefreshView;
+
     private RecyclerView mRecyclerView;
 
     private List<TreeBean.Tree> mTreesLists = new ArrayList<>();
@@ -45,7 +47,6 @@ public class SystemFragment extends BaseFragment {
     protected void initView(View view) {
         super.initView(view);
         mRecyclerView = view.findViewById(R.id.system_recycler_view);
-        mRefreshView = view.findViewById(R.id.system_swipe_refresh);
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -75,14 +76,7 @@ public class SystemFragment extends BaseFragment {
             public void onSuccess(String response) {
                 TreeBean treeBean = HttpUtils.parseJson(response, TreeBean.class);
                 List<TreeBean.Tree> topTrees = treeBean.getData();
-               // mTreesLists.addAll(treeBean.getData());
-//                getActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mRecyclerView.setAdapter(new SystemRecyclerAdapter(getActivity(),mTreesLists));
-//                    }
-//                });
-                // 获取数据，将将输出传输到Adapter去处理
+
                 mAdapter.getMoreData(topTrees);
             }
 

@@ -1,5 +1,8 @@
 package com.zzh.aiwanandroid.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 public class TreeBean {
@@ -31,7 +34,7 @@ public class TreeBean {
         this.errorMsg = errorMsg;
     }
 
-    public static class Tree{
+    public static class Tree implements Parcelable {
         private String author;
         private List<Tree> children;
         private int courseId;
@@ -45,6 +48,34 @@ public class TreeBean {
         private int parentChapterId;
         private boolean userControlSetTop;
         private int visible;
+
+        protected Tree(Parcel in) {
+            author = in.readString();
+            children = in.createTypedArrayList(Tree.CREATOR);
+            courseId = in.readInt();
+            conver = in.readString();
+            desc = in.readString();
+            id = in.readInt();
+            lisense = in.readString();
+            lisenseLink = in.readString();
+            name = in.readString();
+            order = in.readInt();
+            parentChapterId = in.readInt();
+            userControlSetTop = in.readByte() != 0;
+            visible = in.readInt();
+        }
+
+        public static final Creator<Tree> CREATOR = new Creator<Tree>() {
+            @Override
+            public Tree createFromParcel(Parcel in) {
+                return new Tree(in);
+            }
+
+            @Override
+            public Tree[] newArray(int size) {
+                return new Tree[size];
+            }
+        };
 
         public String getAuthor() {
             return author;
@@ -148,6 +179,28 @@ public class TreeBean {
 
         public void setVisible(int visible) {
             this.visible = visible;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(author);
+            dest.writeTypedList(children);
+            dest.writeInt(courseId);
+            dest.writeString(conver);
+            dest.writeString(desc);
+            dest.writeInt(id);
+            dest.writeString(lisense);
+            dest.writeString(lisenseLink);
+            dest.writeString(name);
+            dest.writeInt(order);
+            dest.writeInt(parentChapterId);
+            dest.writeByte((byte) (userControlSetTop ? 1 : 0));
+            dest.writeInt(visible);
         }
     }
 }

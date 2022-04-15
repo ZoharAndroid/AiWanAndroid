@@ -9,6 +9,8 @@ public class Constants {
     public static final String intent_extra_title = "intent_extra_title";
     public static final String intent_extra_articles = "intent_extra_article";
     public static final String intent_extra_page = "intent_extra_page";
+    public static final String intent_extra_position = "intent_extra_position";
+    public static final String intent_extra_trees = "intent_extra_tress";
     /**
      * bottom pager fragment tags
      */

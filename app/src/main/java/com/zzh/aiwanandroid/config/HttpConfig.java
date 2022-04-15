@@ -107,9 +107,25 @@ public class HttpConfig {
     /**
      * 体系数据
      * https://www.wanandroid.com/tree/json
-     *
+     * <p>
      * 方法：GET
      * 参数：无
      */
     public static String STRUCTURE_URL = "https://www.wanandroid.com/tree/json";
+
+
+    /**
+     * 知识体系下的文章
+     * https://www.wanandroid.com/article/list/0/json?cid=60
+     * <p>
+     * 方法：GET
+     * 参数：
+     * cid 分类的id，上述二级目录的id
+     * 页码：拼接在链接上，从0开始。
+     *
+     * @return
+     */
+    public static String Tree_Article_URL(int page, int cid) {
+        return "https://www.wanandroid.com/article/list/" + page + "/json?cid=" + cid;
+    }
 }

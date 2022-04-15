@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +22,7 @@ import com.zzh.aiwanandroid.R;
 import com.zzh.aiwanandroid.activity.ContentActivity;
 import com.zzh.aiwanandroid.bean.Article;
 import com.zzh.aiwanandroid.fragment.home.HomeRecyclerViewAdapter;
+import com.zzh.aiwanandroid.fragment.structure.TreeDetailFragment;
 import com.zzh.aiwanandroid.utils.CommonUtils;
 import com.zzh.aiwanandroid.utils.LogUtils;
 
@@ -145,7 +147,7 @@ public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
         if (holder instanceof FootViewHolder) {
             FootViewHolder footViewHolder = (FootViewHolder) holder;
-            if (ResultFragment.getLoadIsOver()) {
+            if (ResultFragment.getLoadIsOver() || TreeDetailFragment.getLoadIsOver()) {
                 footViewHolder.noDataText.setVisibility(View.VISIBLE);
                 footViewHolder.footView.setVisibility(View.GONE);
             } else {
