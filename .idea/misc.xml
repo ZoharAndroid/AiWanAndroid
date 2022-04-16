@@ -22,6 +22,7 @@
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_home.xml" value="0.176" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_naivigation.xml" value="0.25885416666666666" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_project.xml" value="0.12588652482269502" />
+        <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_project_detail.xml" value="0.25885416666666666" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_question.xml" value="0.152" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_result.xml" value="0.264" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_search.xml" value="0.264" />
@@ -33,6 +34,7 @@
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/item_footer_layout.xml" value="0.264" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/item_home_article.xml" value="0.3289099526066351" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/item_home_banner_layout.xml" value="0.10104166666666667" />
+        <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/item_project_detail.xml" value="0.264" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/item_system.xml" value="0.264" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/item_tag.xml" value="0.69375" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/layout_content_refresh_loading.xml" value="0.25885416666666666" />

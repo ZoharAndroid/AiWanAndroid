@@ -131,13 +131,46 @@ public class HttpConfig {
 
     /**
      * https://www.wanandroid.com/navi/json
-     *
+     * <p>
      * 方法：GET
      * 参数：无
      *
      * @return
      */
-    public static String NAVIGATION_URL(){
+    public static String NAVIGATION_URL() {
         return "https://www.wanandroid.com/navi/json";
+    }
+
+    /**
+     * 项目分类
+     * https://www.wanandroid.com/project/tree/json
+     * <p>
+     * 方法： GET
+     * 参数： 无
+     *
+     * @return
+     */
+    public static String PROJECT_LIST_URL() {
+        return "https://www.wanandroid.com/project/tree/json";
+    }
+
+
+    /**
+     * 项目列表数据
+     * 某一个分类下项目列表数据，分页展示
+     * <p>
+     * https://www.wanandroid.com/project/list/1/json?cid=294
+     * <p>
+     * 方法：GET
+     * 参数：
+     * cid 分类的id，上面项目分类接口
+     * 页码：拼接在链接中，从1开始。
+     *
+     * @param page
+     * @param id
+     * @return
+     */
+    public static String PROJECT_DETAIL_URL(int page, int id) {
+        return "https://www.wanandroid.com/project/list/" + page + "/json?cid=" + id;
     }
 }
