@@ -118,15 +118,19 @@ public class NavigationFragment extends BaseFragment {
                                 super.onScrollStateChanged(recyclerView, newState);
 
                                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                                    mVerticalTabView.setTabSelected(manager.findLastVisibleItemPosition());
-
+                                    if (isUp) {
+                                        mVerticalTabView.setTabSelected(manager.findLastVisibleItemPosition());
+                                    } else {
+                                        mVerticalTabView.setTabSelected(manager.findFirstVisibleItemPosition());
+                                    }
                                 }
                             }
 
                             @Override
                             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                                 super.onScrolled(recyclerView, dx, dy);
-
+                                    // 向下滑动
+                                    isUp = dy > 0; // 向上滑动
                             }
                         });
                     }
