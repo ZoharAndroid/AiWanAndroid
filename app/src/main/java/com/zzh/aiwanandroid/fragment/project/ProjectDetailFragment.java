@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,22 +20,25 @@ import com.zzh.aiwanandroid.bean.TreeBean;
 import com.zzh.aiwanandroid.config.CallbackListener;
 import com.zzh.aiwanandroid.config.HttpConfig;
 import com.zzh.aiwanandroid.utils.HttpUtils;
+import com.zzh.aiwanandroid.widget.onLoadMoreListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
 
-public class ProjectDetailFragment extends BaseFragment {
+public class ProjectDetailFragment extends BaseFragment implements LoadDataListener {
 
     private int mId;
 
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mRefreshLayout;
 
-    private int mCurrentPage = 0;
+    private int mCurrentPage = 1;
+    private int mPageCount;
     private List<Article> mArticles = new ArrayList<>();
     private ProjectDetailAdapter adapter;
+    private boolean isOver = false;
 
     private ProjectDetailFragment() {
     }
@@ -69,10 +73,35 @@ public class ProjectDetailFragment extends BaseFragment {
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(manager);
 
-        loadProjectDetailData(mCurrentPage);
+        LoadDataListener listener = this;
 
-        adapter = new ProjectDetailAdapter(getActivity(),mArticles);
+        loadProjectDetailData(mCurrentPage, listener);
+
+        adapter = new ProjectDetailAdapter(getActivity(), mArticles);
         mRecyclerView.setAdapter(adapter);
+
+        // 下拉刷新
+        mRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // 开始刷新
+                mCurrentPage = 1; // 注意从1开始
+                mRefreshLayout.setRefreshing(true);
+                mArticles.clear();
+                // 重新加载数据
+                loadProjectDetailData(mCurrentPage, listener);
+            }
+        });
+
+        // 上拉加载
+        mRecyclerView.addOnScrollListener(new onLoadMoreListener() {
+            @Override
+            protected void onLoading(int countItem, int lastItem) {
+                if (mCurrentPage < mPageCount) {
+                    loadProjectDetailData(++mCurrentPage, listener);
+                }
+            }
+        });
     }
 
     @Override
@@ -80,28 +109,51 @@ public class ProjectDetailFragment extends BaseFragment {
         return R.layout.fragment_project_detail;
     }
 
-    private void loadProjectDetailData(int page) {
+    private void loadProjectDetailData(int page, LoadDataListener listener) {
         HttpUtils.sendHttpRequest(HttpConfig.PROJECT_DETAIL_URL(page, mId), new CallbackListener() {
             @Override
             public void onSuccess(String response) {
-                int positionStart = mArticles.size();
-                ArticlePages articlePages = HttpUtils.parseJson(response, ArticlePages.class);
-                List<Article> moreArticleDatas = articlePages.getData().getDatas();
-                mArticles.addAll(moreArticleDatas);
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        // 更新数据源
-                        adapter.notifyItemRangeChanged(positionStart, moreArticleDatas.size());
-                    }
-                });
+                listener.onLoadFinishSuccess(response);
             }
 
             @Override
             public void onFailure(Call call) {
-
+                listener.onLoadFinishFailed();
             }
         });
     }
 
+    @Override
+    public void onLoadFinishSuccess(String response) {
+        int positionStart = mArticles.size();
+        ArticlePages articlePages = HttpUtils.parseJson(response, ArticlePages.class);
+        List<Article> moreArticleDatas = articlePages.getData().getDatas();
+        mArticles.addAll(moreArticleDatas);
+        mPageCount = articlePages.getData().getPageCount();
+        adapter.setIsOver(mCurrentPage == mPageCount);
+        //adapter.isOver(articlePages.getData().isOver()); // 判断请求的是否是最后页数据
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // 更新数据源
+                adapter.notifyItemRangeChanged(positionStart, moreArticleDatas.size());
+                // 关闭刷新
+                mRefreshLayout.setRefreshing(false);
+            }
+        });
+
+    }
+
+    @Override
+    public void onLoadFinishFailed() {
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // 关闭刷新
+                mRefreshLayout.setRefreshing(false);
+            }
+        });
+
+    }
 }
