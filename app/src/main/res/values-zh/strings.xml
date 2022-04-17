@@ -37,4 +37,12 @@
     <string name="input_search">请输入搜索内容</string>
     <string name="welcome">欢迎使用</string>
     <string name="login_after">登录之后更精彩</string>
+    <string name="login_copy">本APP由Zhangzh独立开发</string>
+    <string name="input_username">请输入用户名</string>
+    <string name="input_password">请输入密码</string>
+    <string name="go_register">去注册</string>
+    <string name="go_login">去登录</string>
+    <string name="input_email">请输入邮箱</string>
+    <string name="input_password_again">请再次输入密码</string>
+    <string name="register">注册</string>
 </resources>

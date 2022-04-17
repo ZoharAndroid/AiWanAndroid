@@ -6,7 +6,7 @@
 
 
     <EditText
-        android:id="@+id/login_user_name"
+        android:id="@+id/register_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -15,13 +15,32 @@
         android:hint="@string/input_username" />
 
     <EditText
-        android:id="@+id/login_password"
+        android:id="@+id/register_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:hint="@string/input_username" />
+
+
+    <EditText
+        android:id="@+id/register_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:hint="@string/input_password" />
+
+    <EditText
+        android:id="@+id/register_password_again"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:hint="@string/input_password_again" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +53,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/go_register" />
+            android:text="@string/go_login" />
     </LinearLayout>
 
 </LinearLayout>

@@ -4,10 +4,8 @@ import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 
-import com.zzh.aiwanandroid.R;
-import com.zzh.aiwanandroid.base.BaseActivity;
 import com.zzh.aiwanandroid.base.ExampleBaseActivity;
-import com.zzh.aiwanandroid.fragment.login.LoginFragment;
+import com.zzh.aiwanandroid.fragment.login.LoginOrRegisterFragment;
 
 
 /**
@@ -21,7 +19,7 @@ public class LoginActivity extends ExampleBaseActivity {
         super.initView();
         // 设置标题栏中的返回键为X
         setToolbarHomeIconAndEnabled(ExampleBaseActivity.HOME_ICON_IS_X);
-        setContentFragment(LoginFragment.getInstance(null, null));
+        setContentFragment(LoginOrRegisterFragment.getInstance(null, null));
     }
 
 
