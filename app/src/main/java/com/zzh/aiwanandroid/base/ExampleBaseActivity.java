@@ -16,6 +16,9 @@ import com.zzh.aiwanandroid.R;
 
 public class ExampleBaseActivity extends BaseActivity {
 
+    public static final int HOME_ICON_IS_BACK = 1;
+    public static final int HOME_ICON_IS_X = 2;
+
     private TextView mExampleTitle;
     private Toolbar mExampleToolbar;
     private LinearLayout mExampleSearchContainer;
@@ -35,14 +38,26 @@ public class ExampleBaseActivity extends BaseActivity {
 
         // 设置toolbar
         setSupportActionBar(mExampleToolbar);
+        setToolbarHomeIconAndEnabled(HOME_ICON_IS_BACK);
+
+    }
+
+    protected void setToolbarHomeIconAndEnabled(int homeIconType) {
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             // 显示图标
             supportActionBar.setDisplayHomeAsUpEnabled(true);
-            supportActionBar.setHomeAsUpIndicator(R.mipmap.icon_back);
-        }
+            switch (homeIconType) {
+                case HOME_ICON_IS_BACK:
+                    supportActionBar.setHomeAsUpIndicator(R.mipmap.icon_back);
+                    break;
+                case HOME_ICON_IS_X:
+                    supportActionBar.setHomeAsUpIndicator(R.mipmap.icon_x);
+            }
 
+        }
     }
+
 
     @Override
     protected void initEventAndData() {

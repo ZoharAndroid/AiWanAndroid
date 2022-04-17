@@ -13,6 +13,8 @@
         android:src="@mipmap/icon_nav_header" />
 
     <TextView
+        android:clickable="true"
+        android:id="@+id/nav_header_login_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/nav_header_avatar"

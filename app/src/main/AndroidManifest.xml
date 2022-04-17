@@ -7,9 +7,9 @@
     <application
         android:name=".config.MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_app"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_app"
         android:supportsRtl="true"
         android:theme="@style/Theme.AiWanAndroid">
         <activity
@@ -25,6 +25,7 @@
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".activity.ResultActivity" />
         <activity android:name=".activity.TreeActivity" />
+        <activity android:name=".activity.LoginActivity"/>
     </application>
 
 </manifest>

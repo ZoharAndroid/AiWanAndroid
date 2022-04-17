@@ -173,4 +173,25 @@ public class HttpConfig {
     public static String PROJECT_DETAIL_URL(int page, int id) {
         return "https://www.wanandroid.com/project/list/" + page + "/json?cid=" + id;
     }
+
+
+    /**
+     * 登录
+     * https://www.wanandroid.com/user/login
+     *
+     * 方法：POST
+     * 参数：
+     * 	username，password
+     *
+     *        {
+         *     "data": null,
+         *     "errorCode": -1,
+         *     "errorMsg": "账号密码不匹配！"
+     *      }
+     *
+     * @return
+     */
+    public static String LOGIN_URL(){
+        return "https://www.wanandroid.com/user/login";
+    }
 }

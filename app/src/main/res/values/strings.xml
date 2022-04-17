@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">AiWanAndroid</string>
+    <string name="app_name" translatable="false">爱安卓</string>
     <string name="bottom_home">HOME</string>
     <string name="bottom_question">QUESTION</string>
     <string name="bottom_wechat">WECHAT</string>
@@ -35,4 +35,6 @@
     <string name="search_show">Hurry up search dry article!</string>
     <string name="no_data">No data!O(∩_∩)O</string>
     <string name="input_search">Please input search content！</string>
+    <string name="welcome">WelCome！</string>
+    <string name="login_after">Better after login！</string>
 </resources>

@@ -45,10 +45,11 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView mBottomView;
     private TabLayout mTabLayout;
 
+    private TextView mLoginTextView;
+
     private int mLastFragmentIndex;
     private Fragment mHomeFragment;
     private List<Fragment> mFragments;
-
 
 
     @Override
@@ -63,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         mNavigationView = findViewById(R.id.navigation_view);
         mFloatingActionButton = findViewById(R.id.floating_action_button);
         mTabLayout = findViewById(R.id.tool_bar_tab_layout);
+
+        View headerView = mNavigationView.inflateHeaderView(R.layout.header_navigation_layout);
+        mLoginTextView = headerView.findViewById(R.id.nav_header_login_text_view);
 
         // 将toolbar设置Actionbar
         setSupportActionBar(toolbar);
@@ -179,6 +183,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+        // 登录点击事件
+        mLoginTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

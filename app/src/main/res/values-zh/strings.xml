@@ -35,4 +35,6 @@
     <string name="search_show">快来搜点干货吧(#^.^#)</string>
     <string name="no_data">暂时没有数据O(∩_∩)O</string>
     <string name="input_search">请输入搜索内容</string>
+    <string name="welcome">欢迎使用</string>
+    <string name="login_after">登录之后更精彩</string>
 </resources>
