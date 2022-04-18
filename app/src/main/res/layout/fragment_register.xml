@@ -6,54 +6,120 @@
 
 
     <EditText
+        android:theme="@style/login_edit_text"
         android:id="@+id/register_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="55dp"
+        android:drawableStart="@mipmap/icon_user_name"
+        android:drawablePadding="5dp"
         android:hint="@string/input_username" />
 
     <EditText
+        android:visibility="gone"
+        android:theme="@style/login_edit_text"
         android:id="@+id/register_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="55dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:hint="@string/input_username" />
+        android:layout_marginEnd="55dp"
+        android:drawableStart="@mipmap/icon_user_name"
+        android:drawablePadding="5dp"
+        android:hint="@string/input_email" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:inputType="textPassword"
+            android:theme="@style/login_edit_text"
+            android:id="@+id/register_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="55dp"
+            android:drawableStart="@mipmap/icon_password"
+            android:drawablePadding="5dp"
+            android:hint="@string/input_password" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:visibility="invisible"
+            android:id="@+id/see_register_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/register_password"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:src="@mipmap/icon_see_passwd" />
+    </RelativeLayout>
 
 
-    <EditText
-        android:id="@+id/register_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:hint="@string/input_password" />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/register_password_again"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:hint="@string/input_password_again" />
+        <EditText
+            android:inputType="textPassword"
+            android:theme="@style/login_edit_text"
+            android:id="@+id/register_password_again"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="55dp"
+            android:drawableStart="@mipmap/icon_password"
+            android:drawablePadding="5dp"
+            android:hint="@string/input_password_again" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/see_register_again_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/register_password_again"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:src="@mipmap/icon_see_passwd"
+            android:visibility="invisible" />
+    </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/go_login_view"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="55dp"
         android:orientation="horizontal">
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/icon_left" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:text="@string/go_login" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/register_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginEnd="55dp"
+        android:background="@drawable/buttom_login"
+        android:text="@string/register"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
 
 </LinearLayout>

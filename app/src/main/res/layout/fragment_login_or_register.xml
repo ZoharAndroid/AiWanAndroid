@@ -1,63 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/purple_700"
-        android:scaleType="fitXY"
-        android:src="@mipmap/login_back" />
-
-    <ImageView
-        android:id="@+id/icon_app"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:src="@mipmap/icon_app" />
-
-
-    <TextView
-        android:id="@+id/welcome"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/icon_app"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/welcome"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <TextView
-        android:id="@+id/login_copy"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/welcome"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="@string/login_copy"
-        android:textColor="@color/text_color_bg"
-        android:textSize="13sp" />
+        <ImageView
+            android:id="@+id/icon_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_app" />
 
-    <TextView
-        android:id="@+id/login_after"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/login_copy"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/login_after"
-        android:textColor="@color/text_color_bg"
-        android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/welcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/icon_app"
+            android:layout_marginTop="10dp"
+            android:text="@string/welcome"
+            android:textColor="@color/purple_700"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/login_copy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/welcome"
+            android:layout_marginTop="5dp"
+            android:text="@string/login_copy"
+            android:textColor="@color/tab_text_color"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/login_after"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/login_copy"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:text="@string/login_after"
+            android:textColor="@color/purple_700"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/icon_gray" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/login_or_register_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/login_after"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"/>
 
-</RelativeLayout>
+</LinearLayout>

@@ -7,9 +7,13 @@
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/drawable/bottom_navigation_question.xml" value="0.275" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/drawable/bottom_navigation_system.xml" value="0.275" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/drawable/bottom_navigation_wechat.xml" value="0.275" />
+        <entry key="..\:/Project/AiWanAndroid/app/src/main/res/drawable/buttom_login.xml" value="0.1615" />
+        <entry key="..\:/Project/AiWanAndroid/app/src/main/res/drawable/button.xml" value="0.17" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/drawable/collect_selector.xml" value="0.20208333333333334" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/drawable/progress_bar.xml" value="0.1075" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/drawable/shape_bg_5_blue.xml" value="0.147" />
+        <entry key="..\:/Project/AiWanAndroid/app/src/main/res/drawable/shape_buttom.xml" value="0.1615" />
+        <entry key="..\:/Project/AiWanAndroid/app/src/main/res/drawable/shape_buttom_click.xml" value="0.17" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/drawable/text_view_background.xml" value="0.12" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/drawable/textview_border.xml" value="0.20208333333333334" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/drawable/textview_border_red.xml" value="0.20208333333333334" />
@@ -21,12 +25,13 @@
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/example_activity_layout.xml" value="0.2864583333333333" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/example_scroll_activity_layout.xml" value="0.25885416666666666" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_home.xml" value="0.176" />
-        <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_login.xml" value="0.264" />
+        <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_login.xml" value="0.5045537340619308" />
+        <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_login_or_register.xml" value="0.2" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_naivigation.xml" value="0.25885416666666666" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_project.xml" value="0.12588652482269502" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_project_detail.xml" value="0.25885416666666666" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_question.xml" value="0.152" />
-        <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_register.xml" value="0.25885416666666666" />
+        <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_register.xml" value="0.264" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_result.xml" value="0.264" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_search.xml" value="0.264" />
         <entry key="..\:/Project/AiWanAndroid/app/src/main/res/layout/fragment_system.xml" value="0.12588652482269502" />

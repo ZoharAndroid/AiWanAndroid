@@ -20,4 +20,6 @@ public class Constants {
     public static final int TYPE_WEHCHAT = 2;
     public static final int TYPE_SYSTEM = 3;
     public static final int TYPE_PROJECT = 4;
+
+    public static final String intent_extra_object = "intent_extra_object";
 }

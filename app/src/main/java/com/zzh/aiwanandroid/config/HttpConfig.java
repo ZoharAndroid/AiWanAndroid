@@ -194,4 +194,17 @@ public class HttpConfig {
     public static String LOGIN_URL(){
         return "https://www.wanandroid.com/user/login";
     }
+
+
+    /**
+     * https://www.wanandroid.com/user/register
+     *
+     * 方法：POST
+     * 参数
+     * 	username,password,repassword
+     * @return
+     */
+    public static String REGISTER_URL(){
+        return "https://www.wanandroid.com/user/register";
+    }
 }

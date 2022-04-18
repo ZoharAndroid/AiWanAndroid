@@ -1,6 +1,11 @@
 package com.zzh.aiwanandroid.activity;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -11,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -25,12 +31,14 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.zzh.aiwanandroid.Constants;
 import com.zzh.aiwanandroid.R;
+import com.zzh.aiwanandroid.bean.LoginBean;
 import com.zzh.aiwanandroid.fragment.home.HomeFragment;
 import com.zzh.aiwanandroid.fragment.project.ProjectFragment;
 import com.zzh.aiwanandroid.fragment.square.SquareFragment;
 import com.zzh.aiwanandroid.fragment.structure.StructureFragment;
 import com.zzh.aiwanandroid.fragment.wechat.WechatFragment;
 import com.zzh.aiwanandroid.utils.CommonUtils;
+import com.zzh.aiwanandroid.utils.LogUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
     private int mLastFragmentIndex;
     private Fragment mHomeFragment;
     private List<Fragment> mFragments;
+    private TextView mLoginUserNameView;
+    private ActivityResultLauncher<Intent> launcher;
+    private LoginBean.User user;
 
 
     @Override
@@ -67,6 +78,9 @@ public class MainActivity extends AppCompatActivity {
 
         View headerView = mNavigationView.inflateHeaderView(R.layout.header_navigation_layout);
         mLoginTextView = headerView.findViewById(R.id.nav_header_login_text_view);
+        mLoginUserNameView = headerView.findViewById(R.id.nav_header_login_text_view);
+
+
 
         // 将toolbar设置Actionbar
         setSupportActionBar(toolbar);
@@ -85,12 +99,10 @@ public class MainActivity extends AppCompatActivity {
         // 设置标题栏
         setToolbarTitle(getResources().getString(R.string.bottom_home));
 
-
         initEventAndData();
         if (savedInstanceState == null) {
             initPager(false, Constants.TYPE_MAIN);
         }
-
     }
 
     private void initEventAndData() {
@@ -182,17 +194,26 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
         // 登录点击事件
         mLoginTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
+
+        // 如果本地保存过，那么从SP中获取用户信息
+        user = CommonUtils.getObjectFromSP(LoginBean.User.class);
+        if (user != null){
+            mLoginTextView.setText(user.getUsername());
+            // 将退出登录显示出来
+            mNavigationView.getMenu().findItem(R.id.nav_menu_login_out).setVisible(true);
+            // 并设置为不可点击
+            mLoginTextView.setClickable(false);
+        }
     }
+
 
 
     /**
@@ -268,6 +289,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.menu_explorer:
                 // 浏览器打开
+                break;
+            case R.id.nav_menu_login_out:
+                if (user!=null){
+
+                }
+                // 退出登录
+                // todo:
+
                 break;
         }
         return true;

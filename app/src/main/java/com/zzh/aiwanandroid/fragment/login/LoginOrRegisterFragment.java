@@ -18,6 +18,7 @@ import java.util.List;
 public class LoginOrRegisterFragment extends BaseFragment {
 
     private ViewPager2 mViewPager;
+    private FragmentStateAdapter stateAdapter;
 
     private LoginOrRegisterFragment() {
     }
@@ -41,18 +42,46 @@ public class LoginOrRegisterFragment extends BaseFragment {
         mFragments.add(LoginFragment.getInstance(null, null));
         mFragments.add(RegisterFragment.getInstance(null, null));
 
-        mViewPager.setAdapter(new FragmentStateAdapter(getChildFragmentManager(), getLifecycle()) {
-            @NonNull
+        stateAdapter = new FragmentStateAdapter(getChildFragmentManager(), getLifecycle()) {
+             @NonNull
+             @Override
+             public Fragment createFragment(int position) {
+                 return mFragments.get(position);
+             }
+
+             @Override
+             public int getItemCount() {
+                 return mFragments.size();
+             }
+         };
+
+        mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
-            public Fragment createFragment(int position) {
-                return mFragments.get(position);
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
             }
 
             @Override
-            public int getItemCount() {
-                return mFragments.size();
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                super.onPageScrollStateChanged(state);
             }
         });
+
+        mViewPager.setAdapter(stateAdapter);
+    }
+
+    public void goNextFragment(){
+        int pageCurrentPosition = mViewPager.getCurrentItem();
+        if (pageCurrentPosition  == 0) {
+            mViewPager.setCurrentItem(pageCurrentPosition + 1,true);
+        }else{
+            mViewPager.setCurrentItem(pageCurrentPosition - 1,true);
+        }
     }
 
     @Override
